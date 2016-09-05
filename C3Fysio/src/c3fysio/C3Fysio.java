@@ -15,6 +15,8 @@ public class C3Fysio {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        // Dit is een test
+        System.out.println("Hurr durr durr");
         // Een comment
     }
     
