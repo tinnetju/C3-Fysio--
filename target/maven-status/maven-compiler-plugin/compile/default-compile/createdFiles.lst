@@ -1,0 +1,12 @@
+com\avans\tinnes\objects\Course.class
+com\avans\tinnes\objects\Number.class
+com\avans\tinnes\objects\VoltijdStudent.class
+com\avans\tinnes\objects\Instructor.class
+com\avans\tinnes\objects\ID.class
+com\avans\tinnes\objects\Student.class
+com\avans\tinnes\objects\School.class
+com\avans\tinnes\objects\DeeltijdStudent.class
+com\avans\tinnes\GreetingController.class
+com\avans\tinnes\MijnSpringAppApplication.class
+com\avans\tinnes\objects\Department.class
+com\avans\tinnes\objects\Name.class
