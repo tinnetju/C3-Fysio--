@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import nl.avans.C3.DataStorage.ClientRepository;
+import nl.avans.C3.DataStorage.ClientRepositoryIF;
 import nl.avans.C3.Domain.Client;
+import nl.avans.C3.Domain.ClientNotFoundException;
+import nl.avans.C3.Domain.Insurance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +26,44 @@ import org.springframework.ui.Model;
 
 public class ClientService {
     private ClientRepository clientRepository;
+    //private InsuranceService insuranceService;
     
-    public List<Client> findAll() {
+    /*@Autowired
+    public void setInsuranceService(InsuranceService insuranceService) {
+        this.insuranceService = insuranceService;
+    }*/
+   
+    @Autowired
+    public void setClientRepository(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+    
+    public List<Client> findAllClients() {
         return clientRepository.findAll();
+    }
+    
+    public Client findClientByBSN(int BSN) throws ClientNotFoundException {
+        Client client = null;
+
+        client = clientRepository.findClientByBSN(BSN);
+        if(client.equals(null)) {
+            throw new ClientNotFoundException("Exception!");
+        } else {
+            return client;
+        }
+    }
+    
+    public List<Insurance> getInsurancesForClient(int BSN) throws ClientNotFoundException
+    {
+        Client client = null;
+        List<Insurance> insurances = null; //set in else 
+        
+        
+        client = clientRepository.findClientByBSN(BSN);
+        if(client.equals(null)) {
+            throw new ClientNotFoundException("Exception!");
+        } else {
+            return insurances;
+        }
     }
 }

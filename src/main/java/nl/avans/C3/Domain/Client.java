@@ -28,9 +28,10 @@ public class Client {
     public Client()
     {
         this.contracts = new ArrayList<>();
+        this.invoices = new ArrayList<>();
     }
     
-    public Client(int BSN, String lastName, String firstName, String city, String postalcode, String address, String IBAN, boolean incasso, String email, String tel, InsuranceContract contract){
+    public Client(int BSN, String lastName, String firstName, String city, String postalcode, String address, String IBAN, boolean incasso, String email, String tel, InsuranceContract contract, ArrayList<Invoice> invoices){
         this.BSN = BSN;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -43,6 +44,7 @@ public class Client {
         this.tel = tel;
         this.contracts = new ArrayList<>();
         contracts.add(contract);
+        this.invoices = invoices;
     }
  
     public int getBSN() {

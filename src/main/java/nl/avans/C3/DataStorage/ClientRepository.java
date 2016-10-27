@@ -32,11 +32,11 @@ import nl.avans.C3.Domain.Client;
  *
  * @author Tinne
  */
-public class ClientRepository {
+public class ClientRepository implements ClientRepositoryIF {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    // Deze constructor wordt aangeroepen vanuit de config/PersistenceContext class.
+    @Autowired
     public ClientRepository(DataSource dataSource) { this.jdbcTemplate = new JdbcTemplate(dataSource); }
 
     @Transactional(readOnly=true)
@@ -46,10 +46,10 @@ public class ClientRepository {
     }
     
     @Transactional(readOnly=true)
-    public Client findClientById(int id) {
+    public Client findClientByBSN(int BSN) {
         return jdbcTemplate.queryForObject(
                 "SELECT * FROM client WHERE BSN=?",
-                new Object[]{id}, new ClientRowMapper());
+                new Object[]{BSN}, new ClientRowMapper());
     }
 
     public Client create(final Client client) {
@@ -77,13 +77,10 @@ public class ClientRepository {
             }
         }, holder);
 
-        // Zet de auto increment waarde in de Member
-        //int newClientId = holder.getKey().intValue();
-        //client.setClientID(newClientId);
         return client;
     }
 
-    public void deleteClientById(int id) {
-        jdbcTemplate.update("DELETE FROM client WHERE BSN=?", new Object[]{id});
+    public void deleteClientByBSN(int BSN) {
+        jdbcTemplate.update("DELETE FROM client WHERE BSN=?", new Object[]{BSN});
     }
 }
