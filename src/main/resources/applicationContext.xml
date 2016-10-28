@@ -6,10 +6,11 @@
         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-<root>    
+     
     <bean name="ClientRepository" class="nl.avans.C3.DataStorage.ClientRepository"/>
+    <bean name="ClientRepositoryIF" class="nl.avans.C3.DataStorage.ClientRepositoryIF"/>
     
     <bean name="ClientService" class="nl.avans.C3.BusinessLogic.ClientService">
         <property name="ClientRepository" ref="ClientRepository"></property>
     </bean>
-</root>
+</beans>

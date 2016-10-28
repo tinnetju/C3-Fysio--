@@ -27,6 +27,7 @@ import nl.avans.C3.Domain.Client;
  *
  * @author Tinne
  */
+@Repository
 public class ClientRepository implements ClientRepositoryIF {
     @Autowired
     private JdbcTemplate jdbcTemplate;

@@ -31,10 +31,10 @@ public class FacturatieApplication {
     
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
     
-    public static void main(String[] args) {
-        SpringApplication.run(FacturatieApplication.class, args);
-             
+    public static void main(String[] args) {  
         ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        
+        String henk = "dwa";
         
         ClientService service = appContext.getBean("clientService", ClientService.class);
         
