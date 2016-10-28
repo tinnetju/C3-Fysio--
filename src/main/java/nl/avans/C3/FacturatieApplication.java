@@ -6,6 +6,7 @@ import nl.avans.C3.Config.PersistenceContext;
 import nl.avans.C3.Config.ProductionContext;
 import nl.avans.C3.Config.SwaggerConfig;
 import javafx.application.Application;
+import nl.avans.C3.BusinessLogic.ClientService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -20,6 +21,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @EnableConfigurationProperties
 @ComponentScan(basePackages = {"nl.avans.C3"})
@@ -31,7 +33,11 @@ public class FacturatieApplication {
     
     public static void main(String[] args) {
         SpringApplication.run(FacturatieApplication.class, args);
-                
+             
+        ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        
+        ClientService service = appContext.getBean("clientService", ClientService.class);
+        
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(ApplicationConfig.class);
         ctx.register(ApplicationContext.class);
