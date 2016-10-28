@@ -7,10 +7,13 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.3.xsd">
      
-    <bean name="ClientRepository" class="nl.avans.C3.DataStorage.ClientRepository"/>
-    <bean name="ClientRepositoryIF" class="nl.avans.C3.DataStorage.ClientRepositoryIF"/>
+    <bean name="clientRepository" class="nl.avans.C3.DataStorage.ClientRepository">
+        <constructor-arg val="DataSource"/>
+    </bean>
     
-    <bean name="ClientService" class="nl.avans.C3.BusinessLogic.ClientService">
-        <property name="ClientRepository" ref="ClientRepository"></property>
+    <bean name="clientRepositoryIF" class="nl.avans.C3.DataStorage.ClientRepositoryIF"/>
+    
+    <bean name="clientService" class="nl.avans.C3.BusinessLogic.ClientService">
+        <property name="clientRepository" ref="clientRepository"></property>
     </bean>
 </beans>

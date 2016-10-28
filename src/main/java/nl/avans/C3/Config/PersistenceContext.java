@@ -18,11 +18,10 @@ import nl.avans.C3.DataStorage.ClientRepository;
 @Configuration
 @EnableTransactionManagement
 public class PersistenceContext {
-
     protected static final String PROPERTY_NAME_DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-    protected static final String PROPERTY_NAME_DATABASE_PASSWORD = "test";
-    protected static final String PROPERTY_NAME_DATABASE_URL = "jdbc:mysql://localhost:3306/library";
-    protected static final String PROPERTY_NAME_DATABASE_USERNAME = "spring";
+    protected static final String PROPERTY_NAME_DATABASE_PASSWORD = "fiets";
+    protected static final String PROPERTY_NAME_DATABASE_URL = "jdbc:mysql://localhost:3023/facturatie";
+    protected static final String PROPERTY_NAME_DATABASE_USERNAME = "facturatieadmin";
 
     private static final String PROPERTY_PACKAGES_TO_SCAN = "nl.avans.C3.Config";
 

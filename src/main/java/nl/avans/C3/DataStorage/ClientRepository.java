@@ -42,6 +42,7 @@ public class ClientRepository implements ClientRepositoryIF {
     }
     
     @Transactional(readOnly=true)
+    @Override
     public Client findClientByBSN(int BSN) {
         return jdbcTemplate.queryForObject(
                 "SELECT * FROM client WHERE BSN=?",

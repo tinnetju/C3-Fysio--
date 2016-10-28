@@ -34,9 +34,9 @@ public class FacturatieApplication {
     public static void main(String[] args) {  
         ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         
-        String henk = "dwa";
-        
         ClientService service = appContext.getBean("clientService", ClientService.class);
+                
+        System.out.println(service.findAllClients().get(0).getFirstName());
         
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(ApplicationConfig.class);
