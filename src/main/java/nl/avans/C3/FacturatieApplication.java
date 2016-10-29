@@ -51,8 +51,5 @@ public class FacturatieApplication {
         
         // Je kunt Bean uit de Ctx Context opvragen. Soms is dat nodig om bv een nieuw
         // object te kunnen maken - bv bij XYZRepository.
-        ctx.refresh();
-        DriverManagerDataSource driverMgr = ctx.getBean(DriverManagerDataSource.class);
-        logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ = "+ driverMgr.getUrl() + " usernem = " + driverMgr.getUsername());
     }
 }
