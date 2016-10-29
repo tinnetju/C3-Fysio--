@@ -26,19 +26,19 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @EnableConfigurationProperties
 @ComponentScan(basePackages = {"nl.avans.C3"})
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 @SpringBootApplication
 public class FacturatieApplication {
     
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
     
     public static void main(String[] args) {  
-        ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        //ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         
-        ClientService service = appContext.getBean("clientService", ClientService.class);
+        //ClientService service = appContext.getBean("clientService", ClientService.class);
              
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(service.findAllClients().get(0).getFirstName());
+        //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        //System.out.println(service.findAllClients().get(0).getFirstName());
         
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(ApplicationConfig.class);
@@ -47,10 +47,11 @@ public class FacturatieApplication {
         ctx.register(ProductionContext.class);
         ctx.register(SwaggerConfig.class);
 
-        SpringApplication.run(Application.class);
+        SpringApplication.run(FacturatieApplication.class);
         
         // Je kunt Bean uit de Ctx Context opvragen. Soms is dat nodig om bv een nieuw
         // object te kunnen maken - bv bij XYZRepository.
+        ctx.refresh();
         DriverManagerDataSource driverMgr = ctx.getBean(DriverManagerDataSource.class);
         logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ = "+ driverMgr.getUrl() + " usernem = " + driverMgr.getUsername());
     }

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import nl.avans.C3.DataStorage.ClientRepository;
+import nl.avans.C3.DataStorage.ClientRepositoryIF;
 
 @SuppressWarnings("Duplicates")
 @Profile("default")
@@ -27,7 +28,6 @@ public class PersistenceContext {
 
     @Resource
     private Environment environment;
-
     
     @Bean
     public DataSource dataSource() {
@@ -42,8 +42,8 @@ public class PersistenceContext {
     }
 
     @Bean
-    @Qualifier("PersistenceContext")
     @Primary
+    @Qualifier("PersistenceContext")
     public ClientRepository getClientRepository() {
         return new ClientRepository(this.dataSource());
     }

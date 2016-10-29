@@ -16,16 +16,20 @@ import nl.avans.C3.Domain.Insurance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 
+
+@Service
 public class ClientService {
-    private ClientRepository clientRepository;
+    private ClientRepositoryIF clientRepository;
     //private InsuranceService insuranceService;
     
     /*@Autowired
@@ -34,8 +38,8 @@ public class ClientService {
     }*/
    
     @Autowired
-    public void setClientRepository(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
+    public void setClientRepositoryIF(ClientRepositoryIF clientRepositoryIF) {
+        this.clientRepository = clientRepositoryIF;
     }
     
     public List<Client> findAllClients() {

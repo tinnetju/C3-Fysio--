@@ -38,6 +38,7 @@ public class ClientRepository implements ClientRepositoryIF {
     { 
         this.jdbcTemplate = new JdbcTemplate(dataSource); 
     }
+   
 
     @Transactional(readOnly=true)
     @Override

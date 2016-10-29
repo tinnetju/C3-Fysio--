@@ -33,6 +33,8 @@ public class ClientController {
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
+
+    
     
     @RequestMapping("/rits")
     public String hello(Model model) {
