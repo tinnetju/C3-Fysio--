@@ -28,13 +28,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class ClientController {
     private javax.swing.JTable tblClients;
     private ClientService clientService;
-    
+   
+   
     @Autowired
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
-
-    
     
     @RequestMapping("/rits")
     public String hello(Model model) {

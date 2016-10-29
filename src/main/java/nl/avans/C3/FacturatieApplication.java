@@ -48,8 +48,5 @@ public class FacturatieApplication {
         ctx.register(SwaggerConfig.class);
 
         SpringApplication.run(FacturatieApplication.class);
-        
-        // Je kunt Bean uit de Ctx Context opvragen. Soms is dat nodig om bv een nieuw
-        // object te kunnen maken - bv bij XYZRepository.
     }
 }
