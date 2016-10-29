@@ -22,6 +22,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @EnableConfigurationProperties
 @ComponentScan(basePackages = {"nl.avans.C3"})
@@ -35,7 +36,8 @@ public class FacturatieApplication {
         ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         
         ClientService service = appContext.getBean("clientService", ClientService.class);
-                
+             
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println(service.findAllClients().get(0).getFirstName());
         
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
@@ -46,5 +48,10 @@ public class FacturatieApplication {
         ctx.register(SwaggerConfig.class);
 
         SpringApplication.run(Application.class);
-	}
+        
+        // Je kunt Bean uit de Ctx Context opvragen. Soms is dat nodig om bv een nieuw
+        // object te kunnen maken - bv bij XYZRepository.
+        DriverManagerDataSource driverMgr = ctx.getBean(DriverManagerDataSource.class);
+        logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ = "+ driverMgr.getUrl() + " usernem = " + driverMgr.getUsername());
+    }
 }

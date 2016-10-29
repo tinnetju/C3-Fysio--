@@ -8,10 +8,16 @@
         http://www.springframework.org/schema/context/spring-context-4.3.xsd">
      
     <bean name="clientRepository" class="nl.avans.C3.DataStorage.ClientRepository">
-        <constructor-arg val="DataSource"/>
+        <!--<constructor-arg ref="dataSource"/>-->
     </bean>
     
-    <bean name="clientRepositoryIF" class="nl.avans.C3.DataStorage.ClientRepositoryIF"/>
+    <!--<bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3023/facturatie" />
+        <property name="username" value="facturatieadmin" />
+        <property name="password" value="fiets" />
+    </bean>-->
+
     
     <bean name="clientService" class="nl.avans.C3.BusinessLogic.ClientService">
         <property name="clientRepository" ref="clientRepository"></property>

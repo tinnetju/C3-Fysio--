@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 import nl.avans.C3.Domain.Client;
 
 /**
@@ -33,9 +34,13 @@ public class ClientRepository implements ClientRepositoryIF {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public ClientRepository(DataSource dataSource) { this.jdbcTemplate = new JdbcTemplate(dataSource); }
+    public ClientRepository(DataSource dataSource) 
+    { 
+        this.jdbcTemplate = new JdbcTemplate(dataSource); 
+    }
 
     @Transactional(readOnly=true)
+    @Override
     public List<Client> findAll() {
         List<Client> result = jdbcTemplate.query("SELECT * FROM client", new ClientRowMapper());
         return result;
