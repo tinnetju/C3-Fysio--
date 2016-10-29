@@ -33,10 +33,16 @@ public class ClientController {
     @Autowired
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
+        
+
     }
     
-    @RequestMapping("/rits")
-    public String hello(Model model) {
+    @RequestMapping(value = "/rits", method = RequestMethod.GET)
+    public String hello(ModelMap model) {
+        /*List<Client> henk = clientService.findAllClients();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(henk.get(0).getBSN());*/
+        
         model.addAttribute("message", "Hello from the controller");
         
         return "clients";
@@ -66,7 +72,7 @@ public class ClientController {
         model.addAttribute("client", client);
         model.addAttribute("message", new String("New client has been added successfully")); //CHECK VOOR MAKEN
         // Open de juiste view template als resultaat.
-        return "views/client/home";
+        return "views/client/addclient";
     }
     
     
