@@ -5,12 +5,14 @@
         <p th:text="${client.FirstName}" />
         <p th:text="${client.LastName}" />
         <p th:text="${client.City}" />
-        <p th:text="${client.PostalCode}" />
         <p th:text="${client.Address}" />
         <p th:text="${client.IBAN}" />
         <p th:text="${client.Incasso}" />
+        
+        <!--De volgende 3 kunnen (nog) niet getoond worden op een pagina om de een of andere rede
         <p th:text="${client.EmailAddress}" />
-        <p th:text="${client.TelephoneNumer}" />
+        <p th:text="${client.TelephoneNumer}" /> 
+        <p th:object="${client.PostalCode}" /> -->
 </body>
 
 </html>

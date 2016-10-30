@@ -40,12 +40,12 @@ public class InsuranceController {
     }
     
     @RequestMapping(value = "/insurance", method = RequestMethod.GET)
-    public String hello(ModelMap model) {
-        try {
+    public String helloInsurance(ModelMap model) {
+        /*try {
             Insurance testInsurance = insuranceService.findInsuranceById(1);
         } catch (InsuranceNotFoundException ex) {
             System.out.println("ERRORRRRRRRRR");
-        }
+        }*/
 
         model.addAttribute("message", "Hello from the controller");
         

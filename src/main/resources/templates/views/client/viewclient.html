@@ -1,10 +1,37 @@
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<div class="container" layout:fragment="summary">
+
+    <div class="page-header">
+        <h1 th:text="${book.Title}">Boek informatie</h1>
+        <p class="lead" th:text="${book.Author}">Auteur</p>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-3">EAN</div>
+                        <div class="col-xs-9">
+                            <p th:text="${book.EAN}">EAN</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3">Summary</div>
+                        <div class="col-xs-9">
+                            <p th:utext="${book.Edition}">Beschrijving</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 hidden-xs hidden-sm">Description</div>
+                        <div class="col-sm-8 col-md-6">
+                            <p th:utext="${book.ShortDescription}">Beschrijving</p>
+                        </div>
+                        <div class="col-sm-4 col-md-3">
+                            <img class="thumbnail" th:src="${book.ImageURL}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import nl.avans.C3.DataStorage.ClientRepository;
+import nl.avans.C3.DataStorage.InsuranceRepository;
 
 @SuppressWarnings("Duplicates")
 @Profile("default")
@@ -21,7 +22,7 @@ import nl.avans.C3.DataStorage.ClientRepository;
 @EnableTransactionManagement
 public class PersistenceContext {
     protected static final String PROPERTY_NAME_DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-    protected static final String PROPERTY_NAME_DATABASE_PASSWORD = "password";
+    protected static final String PROPERTY_NAME_DATABASE_PASSWORD = "";
     protected static final String PROPERTY_NAME_DATABASE_URL = "jdbc:mysql://localhost:3306/facturatie";
     protected static final String PROPERTY_NAME_DATABASE_USERNAME = "root";
 
@@ -38,16 +39,6 @@ public class PersistenceContext {
         dataSource.setUrl(PROPERTY_NAME_DATABASE_URL);
         dataSource.setUsername(PROPERTY_NAME_DATABASE_USERNAME);
         dataSource.setPassword(PROPERTY_NAME_DATABASE_PASSWORD);
-
-        
-        
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(PROPERTY_NAME_DATABASE_URL, PROPERTY_NAME_DATABASE_USERNAME, PROPERTY_NAME_DATABASE_PASSWORD);
-            System.out.println("Success!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         
         return dataSource;
     }
@@ -57,5 +48,10 @@ public class PersistenceContext {
     @Qualifier("PersistenceContext")
     public ClientRepository getClientRepository() {
         return new ClientRepository(this.dataSource());
+    }
+    
+    @Bean
+    public InsuranceRepository getInsuranceRepository() {
+        return new InsuranceRepository(this.dataSource());
     }
 }
