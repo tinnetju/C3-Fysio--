@@ -43,10 +43,6 @@ public class ClientService {
         this.clientRepository = clientRepositoryIF;
     }
     
-    public List<Map<String, Object>> testQuery() {
-        return clientRepository.testQuery();
-    }
-    
     public List<Client> findAllClients() {
         return clientRepository.findAll();
     }

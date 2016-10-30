@@ -41,7 +41,7 @@ public class ClientController {
         Client oldClient = henk.get(0);
         
         Client newClient = new Client(252525, "de Vries", "Johan", "Dussen", "4271AU", "Vruchtlaan 18", "49128491284", true, "Marnix@Live.com", "04162937892", null, null);
-        clientService.create(newClient);
+        //clientService.create(newClient);
 
         model.addAttribute("client", oldClient);
         

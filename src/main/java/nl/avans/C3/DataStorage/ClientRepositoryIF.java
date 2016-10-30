@@ -21,6 +21,4 @@ public interface ClientRepositoryIF {
     public Client create(final Client client);
     
     public void deleteClientByBSN(int BSN);
-    
-    public List<Map<String, Object>> testQuery();
 }

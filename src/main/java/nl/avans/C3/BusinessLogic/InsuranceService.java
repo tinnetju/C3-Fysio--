@@ -38,8 +38,8 @@ public class InsuranceService {
     }*/
    
     @Autowired
-    public void setInsuranceRepositoryIF(InsuranceRepositoryIF insuranceRepository) {
-        this.insuranceRepository = insuranceRepository;
+    public void setInsuranceRepository(InsuranceRepositoryIF insuranceRepositoryIF) {
+        this.insuranceRepository = insuranceRepositoryIF;
     }
     
     public List<Insurance> findAllInsurances() {

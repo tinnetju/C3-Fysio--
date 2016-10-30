@@ -51,6 +51,7 @@ public class PersistenceContext {
     }
     
     @Bean
+    @Primary
     public InsuranceRepository getInsuranceRepository() {
         return new InsuranceRepository(this.dataSource());
     }
