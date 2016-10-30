@@ -24,7 +24,7 @@ public class ClientRowMapper implements RowMapper<Client>
         client.setIBAN(rs.getString("IBAN"));
         client.setIncasso(rs.getBoolean("Incasso"));
         client.setEmail(rs.getString("EmailAddress"));
-        client.setTel(rs.getString("PhoneNumber"));
+        client.setTel(rs.getString("TelephoneNumber"));
         return client;
     }
 }
