@@ -38,12 +38,16 @@ public class ClientRepository implements ClientRepositoryIF {
     { 
         this.jdbcTemplate = new JdbcTemplate(dataSource); 
     }
-   
 
     @Transactional(readOnly=true)
-    @Override
     public List<Client> findAll() {
         List<Client> result = jdbcTemplate.query("SELECT * FROM client", new ClientRowMapper());
+        return result;
+    }
+    
+    @Transactional(readOnly=true)
+    public List<Map<String, Object>> testQuery() {
+        List<Map<String, Object>> result = jdbcTemplate.queryForList("SELECT * FROM client");
         return result;
     }
     

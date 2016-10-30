@@ -1,5 +1,7 @@
 package nl.avans.C3.Config;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +14,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import nl.avans.C3.DataStorage.ClientRepository;
-import nl.avans.C3.DataStorage.ClientRepositoryIF;
 
 @SuppressWarnings("Duplicates")
 @Profile("default")
@@ -38,6 +39,16 @@ public class PersistenceContext {
         dataSource.setUsername(PROPERTY_NAME_DATABASE_USERNAME);
         dataSource.setPassword(PROPERTY_NAME_DATABASE_PASSWORD);
 
+        
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(PROPERTY_NAME_DATABASE_URL, PROPERTY_NAME_DATABASE_USERNAME, PROPERTY_NAME_DATABASE_PASSWORD);
+            System.out.println("Success!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         return dataSource;
     }
 

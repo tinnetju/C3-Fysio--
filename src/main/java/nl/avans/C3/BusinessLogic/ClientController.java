@@ -33,17 +33,21 @@ public class ClientController {
     @Autowired
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
-        
-
     }
     
     @RequestMapping(value = "/rits", method = RequestMethod.GET)
     public String hello(ModelMap model) {
-        /*List<Client> henk = clientService.findAllClients();
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(henk.get(0).getBSN());*/
+        List<Client> henk = clientService.findAllClients();
+        Client oldClient = henk.get(0);
         
-        model.addAttribute("message", "Hello from the controller");
+        Client newClient = new Client(252525, "de Vries", "Johan", "Dussen", "4271AU", "Vruchtlaan 18", "49128491284", true, "Marnix@Live.com", "04162937892", null, null);
+        //clientService.create(newClient);
+        
+
+        
+
+        
+        model.addAttribute("client", oldClient);
         
         return "clients";
     }

@@ -7,6 +7,7 @@ package nl.avans.C3.BusinessLogic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import nl.avans.C3.DataStorage.ClientRepository;
 import nl.avans.C3.DataStorage.ClientRepositoryIF;
@@ -38,8 +39,12 @@ public class ClientService {
     }*/
    
     @Autowired
-    public void setClientRepositoryIF(ClientRepositoryIF clientRepositoryIF) {
+    public void setClientRepository(ClientRepositoryIF clientRepositoryIF) {
         this.clientRepository = clientRepositoryIF;
+    }
+    
+    public List<Map<String, Object>> testQuery() {
+        return clientRepository.testQuery();
     }
     
     public List<Client> findAllClients() {
@@ -57,11 +62,14 @@ public class ClientService {
         }
     }
     
+    public Client create(final Client client)  {
+        return clientRepository.create(client);
+    }
+    
     public List<Insurance> getInsurancesForClient(int BSN) throws ClientNotFoundException
     {
         Client client = null;
         List<Insurance> insurances = null; //set in else 
-        
         
         client = clientRepository.findClientByBSN(BSN);
         if(client.equals(null)) {

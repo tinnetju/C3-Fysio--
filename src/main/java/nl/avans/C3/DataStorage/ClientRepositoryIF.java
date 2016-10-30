@@ -6,6 +6,7 @@
 package nl.avans.C3.DataStorage;
 
 import java.util.List;
+import java.util.Map;
 import nl.avans.C3.Domain.Client;
 
 /**
@@ -20,4 +21,6 @@ public interface ClientRepositoryIF {
     public Client create(final Client client);
     
     public void deleteClientByBSN(int BSN);
+    
+    public List<Map<String, Object>> testQuery();
 }

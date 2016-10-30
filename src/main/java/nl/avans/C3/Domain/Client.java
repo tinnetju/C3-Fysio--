@@ -43,8 +43,14 @@ public class Client {
         this.email = email;
         this.tel = tel;
         this.contracts = new ArrayList<>();
-        contracts.add(contract);
-        this.invoices = invoices;
+
+        if(contract != null)
+            contracts.add(contract);            
+        
+        if(invoices != null)
+            this.invoices = invoices;
+        else
+            this.invoices = new ArrayList<>();
     }
  
     public int getBSN() {
