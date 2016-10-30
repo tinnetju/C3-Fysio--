@@ -20,9 +20,9 @@ import nl.avans.C3.DataStorage.ClientRepositoryIF;
 @EnableTransactionManagement
 public class PersistenceContext {
     protected static final String PROPERTY_NAME_DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-    protected static final String PROPERTY_NAME_DATABASE_PASSWORD = "fiets";
-    protected static final String PROPERTY_NAME_DATABASE_URL = "jdbc:mysql://localhost:3023/facturatie";
-    protected static final String PROPERTY_NAME_DATABASE_USERNAME = "facturatieadmin";
+    protected static final String PROPERTY_NAME_DATABASE_PASSWORD = "password";
+    protected static final String PROPERTY_NAME_DATABASE_URL = "jdbc:mysql://localhost:3306/facturatie";
+    protected static final String PROPERTY_NAME_DATABASE_USERNAME = "root";
 
     private static final String PROPERTY_PACKAGES_TO_SCAN = "nl.avans.C3.Config";
 

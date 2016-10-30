@@ -66,6 +66,7 @@ public class InsuranceController {
 
         model.addAttribute("client", insurance);
         model.addAttribute("insurances", clients);
+        model.addAttribute("message", "Hello from the controller");
         return "views/insurance/viewinsurance";
     }
     
