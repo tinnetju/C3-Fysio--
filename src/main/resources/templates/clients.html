@@ -1,18 +1,22 @@
 <html>
 
 <body>
-	<p th:text="${client.BSN}" />
-        <p th:text="${client.FirstName}" />
-        <p th:text="${client.LastName}" />
-        <p th:text="${client.City}" />
-        <p th:text="${client.Address}" />
-        <p th:text="${client.IBAN}" />
-        <p th:text="${client.Incasso}" />
-        
-        <!--De volgende 3 kunnen (nog) niet getoond worden op een pagina om de een of andere rede
-        <p th:text="${client.EmailAddress}" />
-        <p th:text="${client.TelephoneNumer}" /> 
-        <p th:object="${client.PostalCode}" /> -->
+    <div th:if="${info}" th:with="type='info', header='Info'" th:remove="tag">
+        <th:block layout:fragment="alert-summary">
+            <p th:text="${info}"><em>Info bericht</em></p>
+        </th:block>
+    </div>
+    
+    <p th:text="${client.BSN}" />
+    <p th:text="${client.FirstName}" />
+    <p th:text="${client.LastName}" />
+    <p th:text="${client.City}" />
+    <p th:text="${client.Address}" />
+    <p th:text="${client.IBAN}" />
+    <p th:text="${client.Incasso}" />
+    <p th:text="${client.EmailAddress}" />
+    <p th:text="${client.TelephoneNumber}" /> 
+    <p th:object="${client.PostalCode}" />
 </body>
 
 </html>

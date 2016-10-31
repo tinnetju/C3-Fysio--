@@ -6,22 +6,43 @@
 package nl.avans.C3.Domain;
 
 import java.util.ArrayList;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author Thom
  */
 public class Client {
+    @NotNull
     private int BSN;
+    
+    @NotNull
     private String lastName;
+    
+    @NotNull
     private String firstName;
+    
+    @NotNull
     private String city;
-    private String postalcode;
+    
+    @NotNull
+    private String postalCode;
+    
+    @NotNull
     private String address;
+    
+    @NotNull
     private String IBAN;
+    
+    @NotNull
     private boolean incasso;
-    private String email;
-    private String tel;
+    
+    @NotNull
+    private String emailAddress;
+    
+    @NotNull
+    private String telephoneNumber;
+    
     private ArrayList<InsuranceContract> contracts;
     private ArrayList<Invoice> invoices;
  
@@ -31,17 +52,17 @@ public class Client {
         this.invoices = new ArrayList<>();
     }
     
-    public Client(int BSN, String lastName, String firstName, String city, String postalcode, String address, String IBAN, boolean incasso, String email, String tel, InsuranceContract contract, ArrayList<Invoice> invoices){
+    public Client(int BSN, String lastName, String firstName, String city, String postalcode, String address, String IBAN, boolean incasso, String emailaddress, String telephonenumber, InsuranceContract contract, ArrayList<Invoice> invoices){
         this.BSN = BSN;
         this.lastName = lastName;
         this.firstName = firstName;
         this.city = city;
-        this.postalcode = postalcode;
+        this.postalCode = postalcode;
         this.address = address;
         this.IBAN = IBAN;
         this.incasso = incasso;
-        this.email = email;
-        this.tel = tel;
+        this.emailAddress = emailaddress;
+        this.telephoneNumber = telephonenumber;
         this.contracts = new ArrayList<>();
 
         if(contract != null)
@@ -85,12 +106,12 @@ public class Client {
         this.city = city;
     }
 
-    public String getPostalcode() {
-        return postalcode;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public void setPostalcode(String postalcode) {
-        this.postalcode = postalcode;
+    public void setPostalCode(String postalcode) {
+        this.postalCode = postalcode;
     }
 
     public String getAddress() {
@@ -117,20 +138,20 @@ public class Client {
         this.incasso = incasso;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailAddress(String emailaddress) {
+        this.emailAddress = emailaddress;
     }
 
-    public String getTel() {
-        return tel;
+    public String getTelephoneNumber() {
+        return telephoneNumber;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setTelephoneNumber(String telephonenumber) {
+        this.telephoneNumber = telephonenumber;
     }
 
     public ArrayList<InsuranceContract> getContracts() {

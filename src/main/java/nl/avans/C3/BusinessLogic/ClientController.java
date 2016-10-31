@@ -8,6 +8,7 @@ package nl.avans.C3.BusinessLogic;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import javax.validation.Valid;
 import nl.avans.C3.Domain.Client;
 import nl.avans.C3.Domain.ClientNotFoundException;
 import nl.avans.C3.Domain.Insurance;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
@@ -41,14 +43,14 @@ public class ClientController {
         Client oldClient = henk.get(0);
         
         Client newClient = new Client(252525, "de Vries", "Johan", "Dussen", "4271AU", "Vruchtlaan 18", "49128491284", true, "Marnix@Live.com", "04162937892", null, null);
-        //clientService.create(newClient);
+        clientService.create(newClient);
 
         model.addAttribute("client", oldClient);
         
         return "clients";
     }    
     
-    @RequestMapping(value = "/viewclient/{BSN}", method = RequestMethod.GET)
+    @RequestMapping(value = "/client/viewclient/{BSN}", method = RequestMethod.GET)
     public String getClientByBSN(@PathVariable int BSN, ModelMap model) throws ClientNotFoundException {
 
         Client client = null;
@@ -65,14 +67,31 @@ public class ClientController {
         return "views/client/viewclient";
     }
     
-    @RequestMapping(value = "/addclient", method = RequestMethod.GET)
-    public String addClient(ModelMap model) {
+    @RequestMapping(value = "/client/create", method = RequestMethod.GET)
+    public String createClient(ModelMap model) {
         Client client = new Client();
         
         model.addAttribute("client", client);
         model.addAttribute("message", new String("New client has been added successfully")); //CHECK VOOR MAKEN
         // Open de juiste view template als resultaat.
-        return "views/client/addclient";
+        return "views/client/create";
+    }
+    
+    @RequestMapping(value="/client/create", method = RequestMethod.POST)
+    public String validateAndSaveClient(@Valid Client client, final BindingResult bindingResult, final ModelMap model) {
+        if (bindingResult.hasErrors()) {
+            return "views/client/create";
+        }
+        
+        Client newClient = clientService.create(client);
+        if(newClient != null) {
+            model.addAttribute("info", "Member '" + newClient.getFirstName() + " " + newClient.getLastName() + "' is toegevoegd.");
+        } else {
+            model.addAttribute("info", "Member kon niet gemaakt worden.");
+        }
+        
+        model.addAttribute("clients", clientService.findAllClients());
+        return "clients";
     }
     
     

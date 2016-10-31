@@ -19,12 +19,12 @@ public class ClientRowMapper implements RowMapper<Client>
         client.setFirstName(rs.getString("FirstName"));
         client.setLastName(rs.getString("LastName"));
         client.setCity(rs.getString("City"));
-        client.setPostalcode(rs.getString("PostalCode"));
+        client.setPostalCode(rs.getString("PostalCode"));
         client.setAddress(rs.getString("Address"));
         client.setIBAN(rs.getString("IBAN"));
         client.setIncasso(rs.getBoolean("Incasso"));
-        client.setEmail(rs.getString("EmailAddress"));
-        client.setTel(rs.getString("TelephoneNumber"));
+        client.setEmailAddress(rs.getString("EmailAddress"));
+        client.setTelephoneNumber(rs.getString("TelephoneNumber"));
         return client;
     }
 }

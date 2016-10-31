@@ -46,12 +46,6 @@ public class ClientRepository implements ClientRepositoryIF {
     }
     
     @Transactional(readOnly=true)
-    public List<Map<String, Object>> testQuery() {
-        List<Map<String, Object>> result = jdbcTemplate.queryForList("SELECT * FROM client");
-        return result;
-    }
-    
-    @Transactional(readOnly=true)
     @Override
     public Client findClientByBSN(int BSN) {
         return jdbcTemplate.queryForObject(
@@ -60,7 +54,7 @@ public class ClientRepository implements ClientRepositoryIF {
     }
 
     public Client create(final Client client) {
-        final String sql = "INSERT INTO client('BSN', 'FirstName', 'LastName', 'City', 'PostalCode', 'Address', 'IBAN', 'Incasso', 'EmailAddress', 'TelephoneNumber') " +
+        final String sql = "INSERT INTO client(BSN, FirstName, LastName, City, PostalCode, Address, IBAN, Incasso, EmailAddress, TelephoneNumber) " +
                 "VALUES(?,?,?,?,?,?,?,?,?,?)";
 
         // KeyHolder gaat de auto increment key uit de database bevatten.
@@ -74,12 +68,12 @@ public class ClientRepository implements ClientRepositoryIF {
                 ps.setString(2, client.getFirstName());
                 ps.setString(4, client.getLastName());
                 ps.setString(3, client.getCity());
-                ps.setString(5, client.getPostalcode());
+                ps.setString(5, client.getPostalCode());
                 ps.setString(6, client.getAddress());
                 ps.setString(7, client.getIBAN());
                 ps.setBoolean(8, client.isIncasso());
-                ps.setString(9, client.getEmail());
-                ps.setString(10, client.getTel());
+                ps.setString(9, client.getEmailAddress());
+                ps.setString(10, client.getTelephoneNumber());
                 return ps;
             }
         }, holder);
