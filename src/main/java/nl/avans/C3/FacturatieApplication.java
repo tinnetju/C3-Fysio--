@@ -5,6 +5,12 @@ import nl.avans.C3.Config.ApplicationContext;
 import nl.avans.C3.Config.PersistenceContext;
 import nl.avans.C3.Config.ProductionContext;
 import nl.avans.C3.Config.SwaggerConfig;
+
+//imports test code Stefan
+import nl.avans.C3.DataStorage.CompanyDAO;
+import nl.avans.C3.Domain.Company;
+//einde imports test code Stefan
+
 import javafx.application.Application;
 import nl.avans.C3.BusinessLogic.ClientService;
 import org.springframework.boot.SpringApplication;
@@ -39,6 +45,20 @@ public class FacturatieApplication {
              
         //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         //System.out.println(service.findAllClients().get(0).getFirstName());
+        
+        
+        //test code van Stefan //
+        System.out.println("- STAMGEGEVENS -\n");
+        
+        CompanyDAO dao = new CompanyDAO();
+        
+        System.out.println("Bedrijfsnaam: " + dao.getCompany().getName());
+        System.out.println("Plaats: " + dao.getCompany().getCity());
+        System.out.println("Postcode: " + dao.getCompany().getPostalCode());
+        System.out.println("Adres: " + dao.getCompany().getAddress());
+        System.out.println("KVK nummer: " + dao.getCompany().getKVK());
+        //einde test code van Stefan
+        
         
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(ApplicationConfig.class);
