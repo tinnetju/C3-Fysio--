@@ -20,5 +20,7 @@ public interface ClientRepositoryIF {
 
     public Client create(final Client client);
     
+    public void update(final Client client);
+    
     public void deleteClientByBSN(int BSN);
 }

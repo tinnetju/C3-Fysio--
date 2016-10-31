@@ -37,15 +37,11 @@ public class ClientController {
         this.clientService = clientService;
     }
     
-    @RequestMapping(value = "/rits", method = RequestMethod.GET)
-    public String hello(ModelMap model) {
-        List<Client> henk = clientService.findAllClients();
-        Client oldClient = henk.get(0);
-        
-        Client newClient = new Client(252525, "de Vries", "Johan", "Dussen", "4271AU", "Vruchtlaan 18", "49128491284", true, "Marnix@Live.com", "04162937892", null, null);
-        clientService.create(newClient);
+    @RequestMapping(value = "/client/index", method = RequestMethod.GET)
+    public String Index(ModelMap model) {
+        List<Client> clients = clientService.findAllClients();
 
-        model.addAttribute("client", oldClient);
+        model.addAttribute("clients", clients);
         
         return "clients";
     }    
@@ -72,8 +68,6 @@ public class ClientController {
         Client client = new Client();
         
         model.addAttribute("client", client);
-        model.addAttribute("message", new String("New client has been added successfully")); //CHECK VOOR MAKEN
-        // Open de juiste view template als resultaat.
         return "views/client/create";
     }
     
@@ -85,9 +79,9 @@ public class ClientController {
         
         Client newClient = clientService.create(client);
         if(newClient != null) {
-            model.addAttribute("info", "Member '" + newClient.getFirstName() + " " + newClient.getLastName() + "' is toegevoegd.");
+            model.addAttribute("info", "Cliënt '" + newClient.getFirstName() + " " + newClient.getLastName() + "' is toegevoegd.");
         } else {
-            model.addAttribute("info", "Member kon niet gemaakt worden.");
+            model.addAttribute("info", "Cliënt kon niet gemaakt worden.");
         }
         
         model.addAttribute("clients", clientService.findAllClients());
@@ -95,23 +89,36 @@ public class ClientController {
     }
     
     
-    public void refreshTable(){
-        DefaultTableModel clientTableModel = new DefaultTableModel();
-        tblClients.setModel(clientTableModel);
-        clientTableModel.addColumn("Ingrediëntnaam"); 
-        clientTableModel.addColumn("Hoeveelheid");
-        
-        tblClients.getColumnModel().getColumn(1).setMinWidth(100);
-        tblClients.getColumnModel().getColumn(1).setMaxWidth(100);
-        
-        List<Client> clientList = clientService.findAllClients();
-        
-        if(clientList.size() > 0){
-            for (Client currentClient : clientList) {
-                clientTableModel.addRow(new Object[]{"Naam", "Beschrijving", "Prijs", "Eigen risico"});
-            }
+    
+    
+    @RequestMapping(value = "/client/edit/{BSN}", method = RequestMethod.GET)
+    public String editClient(@PathVariable int BSN, ModelMap model) {
+        Client client = null;
+        try {
+            client = clientService.findClientByBSN(BSN);
+        } catch(ClientNotFoundException ex){
+            //logger.error(ex.getMessage());
         }
-        else
-            clientTableModel.addRow(new Object[]{"Geen ingrediënten gevonden"});
+        
+        model.addAttribute("client", client);
+        return "views/client/edit";
+    }
+    
+    @RequestMapping(value="/client/edit", method = RequestMethod.POST)
+    public String validateAndEditClient(@Valid Client client, final BindingResult bindingResult, final ModelMap model) {
+        if (bindingResult.hasErrors()) {
+            return "views/client/edit";
+        }
+        
+        clientService.update(client); //uitbreiden met return bool
+        
+        /*if(returnStatement) {
+            model.addAttribute("info", "Cliënt '" + newClient.getFirstName() + " " + newClient.getLastName() + "' is gewijzigd.");
+        } else {
+            model.addAttribute("info", "Cliënt kon niet worden gewijzigd");
+        }*/
+        
+        model.addAttribute("clients", clientService.findAllClients());
+        return "clients";
     }
 }

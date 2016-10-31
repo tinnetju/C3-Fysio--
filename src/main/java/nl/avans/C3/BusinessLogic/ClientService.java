@@ -62,6 +62,10 @@ public class ClientService {
         return clientRepository.create(client);
     }
     
+    public void update(final Client client)  {
+        clientRepository.update(client);
+    }
+    
     public List<Insurance> getInsurancesForClient(int BSN) throws ClientNotFoundException
     {
         Client client = null;
