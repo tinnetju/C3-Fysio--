@@ -12,16 +12,27 @@ import nl.avans.C3.Domain.Company;
  * @author Stefan
  */
 public class CompanyDAO {
+    private String name = "Fysiotherapiepraktijk Moker";
+    private String address = "Straat 1";
+    private String postalCode = "1234AB";
+    private String city = "Breda";
+    private String country = "Nederland";
+    private int phoneNumber = 0761234567;
+        
+    private Company company = new Company(name, address, postalCode, city, country, phoneNumber);
+    
     public Company getCompany() {
-
-        String name = "Fysiotherapiepraktijk";
-        String city = "Breda";
-        String postalCode = "1234AB";
-        String address = "Straat 1";
-        int KVK = 12341234;
-        
-        Company company = new Company(name, city, postalCode, address, KVK);
-        
         return company;
+    }
+    
+    public boolean editCompany(String name, String address, String postalCode, String city, String country, int phoneNumber) {
+        company.setName(name);
+        company.setAddress(address);
+        company.setPostalCode(postalCode);
+        company.setCity(city);
+        company.setCountry(country);
+        company.setPhoneNumber(phoneNumber);
+        
+        return true;
     }
 }

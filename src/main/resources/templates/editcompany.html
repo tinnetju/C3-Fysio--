@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Stamgegevens Bewerken</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>Bewerken van de stamgegevens</h1>
+    
+    <p>
+        <form action="/editcompany" method="post">
+
+            Bedrijfsnaam: <br />
+            <input type="text" th:value="${name}" name="name"/><br /><br />
+
+            Adres: <br />
+            <input type="text" th:value="${address}" name="address"/><br /><br />
+
+            Postcode: <br />
+            <input type="text" th:value="${postalCode}" name="postalCode"/><br /><br />
+
+            Plaats: <br />
+            <input type="text" th:value="${city}" name="city"/><br /><br />
+
+            Land: <br />
+            <input type="text" th:value="${country}" name="country"/><br /><br />
+
+            Telefoonnummer: <br />
+            <input type="text" th:value="${phoneNumber}" name="phoneNumber"/><br /><br />
+
+            <input type="submit" name="save" value="Aanpassen" />
+
+        </form>
+    </p>
+    
+    <br />
+    
+    <a href="/company">Klik hier om de stamgegevens te bekijken</a>
+</body>
+</html>
