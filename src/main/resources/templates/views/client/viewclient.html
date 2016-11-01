@@ -3,55 +3,82 @@
         <h2>Klantgegevens</h2>
         
         <div>
-            <h4>Persoonlijke gegevens</h4>
+            <h3>Persoonlijke gegevens</h3>
             
             <div> 
-                <p th:text="${client.BSN}"/>
+                <p>
+                    <b>BSN: </b>
+                    <span th:text="${client.BSN}"/>
+                </p>
             </div>
-            
+
             <div> 
-                <p th:text="${client.FirstName} + '' + ${client.LastName}"/>
-            </div>
-        </div>
-        
-        <div>
-            <h4>Woongegevens</h4>
-            
-            <div> 
-                <p th:text="${client.Address}"/>
-            </div>
-            
-            <div> 
-                <p th:text="${client.City}"/>
-            </div>
-            
-            <div> 
-                <p th:text="${client.Postalcode}"/>
-            </div>
-        </div>
-        
-        
-        <div>
-            <h4>Bankgegevens</h4>
-            
-            <div> 
-                <p th:text="${client.IBAN}"/>
-            </div>
-            
-            <div> 
-                <p th:text="${client.Incasso} ? 'Ja' : 'Nee'" />
+                <p>
+                    <b>Naam: </b>
+                    <span th:text="${client.FirstName} + ' ' + ${client.LastName}"/>
+                </p>
             </div>
         </div>
         
         <div>
-            <h4>Contactgegevens</h4>
+            <h3>Woongegevens</h3>
             
             <div> 
-                <p th:text="${client.EmailAddress}"/>
+                <p>
+                    <b>Adres: </b>
+                    <span th:text="${client.Address}"/>
+                </p>
             </div>
             
             <div> 
-                <p th:text="${client.TelephoneNumber}"/>
+                <p>
+                    <b>Woonplaats: </b>
+                    <span th:text="${client.City}"/>
+                </p>
+            </div>
+            
+            <div> 
+                <p>
+                    <b>Postcode: </b>
+                    <span th:text="${client.PostalCode}"/>
+                </p>
+            </div>
+        </div>
+        
+        
+        <div>
+            <h3>Bankgegevens</h3>
+            
+            <div> 
+                <p>
+                    <b>IBAN: </b>
+                    <span th:text="${client.IBAN}"/>
+                </p>
+            </div>
+            
+            <div> 
+                <p>
+                    <b>Automatische incasso: </b>
+                    <span th:text="${client.Incasso} ? 'Ja' : 'Nee'" />
+                </p>
+            </div>
+        </div>
+        
+        <div>
+            <h3>Contactgegevens</h3>
+            
+            <div> 
+                <p>
+                    <b>Emailadres: </b>
+                    <span th:text="${client.EmailAddress}"/>
+                </p>
+            </div>
+            
+            <div> 
+                <p>
+                    <b>Telefoonnummer: </b>
+                    <span th:text="${client.TelephoneNumber}"/>
+                </p>
             </div>
         </div>
     </div>

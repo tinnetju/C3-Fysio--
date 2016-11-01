@@ -37,7 +37,7 @@ public class ClientController {
         this.clientService = clientService;
     }
     
-    @RequestMapping(value = "/client/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/clients", method = RequestMethod.GET)
     public String Index(ModelMap model) {
         List<Client> clients = clientService.findAllClients();
 
@@ -88,9 +88,6 @@ public class ClientController {
         return "clients";
     }
     
-    
-    
-    
     @RequestMapping(value = "/client/edit/{BSN}", method = RequestMethod.GET)
     public String editClient(@PathVariable int BSN, ModelMap model) {
         Client client = null;
@@ -110,15 +107,30 @@ public class ClientController {
             return "views/client/edit";
         }
         
-        clientService.update(client); //uitbreiden met return bool
-        
-        /*if(returnStatement) {
-            model.addAttribute("info", "Cliënt '" + newClient.getFirstName() + " " + newClient.getLastName() + "' is gewijzigd.");
-        } else {
+        try {
+            clientService.update(client);
+            model.addAttribute("info", "Cliënt '" + client.getFirstName() + " " + client.getLastName() + "' is gewijzigd.");
+        } catch(Exception e){
             model.addAttribute("info", "Cliënt kon niet worden gewijzigd");
-        }*/
+        }
         
         model.addAttribute("clients", clientService.findAllClients());
         return "clients";
     }
+    
+    
+    @RequestMapping(value = "/client/delete/{BSN}", method = RequestMethod.GET)
+    public String deleteClient(@PathVariable int BSN, ModelMap model) {
+        Client client = null;
+        try {
+            client = clientService.findClientByBSN(BSN);
+            clientService.delete(BSN);
+            model.addAttribute("info", "Cliënt '" + client.getFirstName() + " " + client.getLastName() + "' is verwijderd.");
+        } catch(Exception e){
+             model.addAttribute("info", "Cliënt kon niet worden verwijderd.");
+        }
+        model.addAttribute("clients", clientService.findAllClients());
+        return "clients";
+    }
 }
+

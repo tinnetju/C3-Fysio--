@@ -4,7 +4,7 @@
         <div class="page-header">
             <h1>Cliënt toevoegen</h1>
         </div>
-        <h2>Hier kunt u een bestaande cliënt wijzigen.</h2>
+        <h2>Hier kunt u een nieuwe cliënt aanmaken.</h2>
         <form id="createMemberForm" action="#" th:action="@{/client/create}" th:object="${client}" method="post">
             <div th:if="${#fields.hasErrors('*')}">
                 <div th:with="type='danger', header='Fouten in het formulier'" th:remove="tag">

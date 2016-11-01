@@ -66,6 +66,10 @@ public class ClientService {
         clientRepository.update(client);
     }
     
+    public void delete(final int BSN)  {
+        clientRepository.deleteClientByBSN(BSN);
+    }
+    
     public List<Insurance> getInsurancesForClient(int BSN) throws ClientNotFoundException
     {
         Client client = null;

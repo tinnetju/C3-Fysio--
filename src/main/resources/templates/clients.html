@@ -28,7 +28,7 @@
             <td th:text="${client.Incasso} ? 'Ja' : 'Nee'"/>
             <td th:text="${client.EmailAddress}"/>
             <td th:text="${client.TelephoneNumber}"/>
-            <td><a th:href="@{/client/edit/{BSN}(BSN=${client.BSN})}" th:text="Bewerken"/> <a th:href="@{/client/delete/{BSN}(BSN=${client.BSN})}" th:text="Verwijderen"/> <a th:href="@{/client/edit/{BSN}(BSN=${client.BSN})}" th:text="Factureren"/> <a th:href="@{/client/edit/{BSN}(BSN=${client.BSN})}" th:text="Facturen"/></td>
+            <td><a th:href="@{/client/viewclient/{BSN}(BSN=${client.BSN})}" th:text="Bekijken"/><a th:href="@{/client/edit/{BSN}(BSN=${client.BSN})}" th:text="Bewerken"/> <a th:href="@{/client/delete/{BSN}(BSN=${client.BSN})}" th:text="Verwijderen"/></td>
         </tr>
         </tbody>
     </table>
