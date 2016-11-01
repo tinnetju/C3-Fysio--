@@ -15,9 +15,9 @@ public class Company {
     private String postalCode;
     private String city;
     private String country;
-    private int phoneNumber;
+    private String phoneNumber;
     
-    public Company(String name, String address, String postalCode, String city, String country, int phoneNumber){
+    public Company(String name, String address, String postalCode, String city, String country, String phoneNumber){
         this.name = name;
         this.address = address;
         this.postalCode = postalCode;
@@ -47,7 +47,7 @@ public class Company {
         return country;
     }
     
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
@@ -72,7 +72,7 @@ public class Company {
         this.city = city;
     }
     
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }

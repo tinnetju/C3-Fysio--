@@ -59,7 +59,7 @@ public class FacturatieApplication {
         System.out.println("Land: " + dao.getCompany().getCountry());
         System.out.println("Telefoonnummer: " + dao.getCompany().getPhoneNumber());
         
-        dao.editCompany("Fysiotherapiepraktijk Mals", "Straat 2", "1234AB", "Breda", "Nederland", 0761234123);
+        dao.editCompany("Fysiotherapiepraktijk Mals", "Straat 2", "1234AB", "Breda", "Nederland", "0761234123");
         
         System.out.println("\nAanpassingen\n");
         

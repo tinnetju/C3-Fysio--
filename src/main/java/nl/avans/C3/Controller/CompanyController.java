@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nl.avans.C3.BusinessLogic;
+package nl.avans.C3.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import nl.avans.C3.DataStorage.CompanyDAO;
+import nl.avans.C3.BusinessLogic.CompanyManager;
 /**
  *
  * @author Stefan
@@ -20,51 +20,58 @@ import nl.avans.C3.DataStorage.CompanyDAO;
 
 @Controller
 public class CompanyController {
-    CompanyDAO dao = new CompanyDAO();
+    private CompanyManager manager = new CompanyManager();
+    
+    private String name;
+    private String address;
+    private String postalCode;
+    private String city;
+    private String country;
+    private String phoneNumber;
     
     @RequestMapping("/company")
     String company(Model model) {
-        String name = dao.getCompany().getName();
+        name = manager.getCompany().getName();
         model.addAttribute("name", name);
-       
-        String address = dao.getCompany().getAddress();
+        
+        address = manager.getCompany().getAddress();
         model.addAttribute("address", address);
-       
-        String postalCode = dao.getCompany().getPostalCode();
+        
+        postalCode = manager.getCompany().getPostalCode();
         model.addAttribute("postalCode", postalCode);
-       
-        String city = dao.getCompany().getCity();
+        
+        city = manager.getCompany().getCity();
         model.addAttribute("city", city);
-       
-        String country = dao.getCompany().getCountry();
+        
+        country = manager.getCompany().getCountry();
         model.addAttribute("country", country);
-       
-        int phoneNumber = dao.getCompany().getPhoneNumber();
+        
+        phoneNumber = manager.getCompany().getPhoneNumber();
         model.addAttribute("phoneNumber", phoneNumber);
-       
+        
         return "company";
     }
    
     @RequestMapping(value="/editcompany")
     String editcompany(Model model) {
-        String name = dao.getCompany().getName();
+        name = manager.getCompany().getName();
         model.addAttribute("name", name);
-       
-        String address = dao.getCompany().getAddress();
+        
+        address = manager.getCompany().getAddress();
         model.addAttribute("address", address);
-       
-        String postalCode = dao.getCompany().getPostalCode();
+        
+        postalCode = manager.getCompany().getPostalCode();
         model.addAttribute("postalCode", postalCode);
-       
-        String city = dao.getCompany().getCity();
+        
+        city = manager.getCompany().getCity();
         model.addAttribute("city", city);
-       
-        String country = dao.getCompany().getCountry();
+        
+        country = manager.getCompany().getCountry();
         model.addAttribute("country", country);
-       
-        int phoneNumber = dao.getCompany().getPhoneNumber();
+        
+        phoneNumber = manager.getCompany().getPhoneNumber();
         model.addAttribute("phoneNumber", phoneNumber);
-       
+        
         return "editcompany";
     }
     
@@ -76,9 +83,9 @@ public class CompanyController {
             @RequestParam(value = "postalCode") String postalCodeEdit,
             @RequestParam(value = "city") String cityEdit,
             @RequestParam(value = "country") String countryEdit,
-            @RequestParam(value = "phoneNumber") int phoneNumberEdit
+            @RequestParam(value = "phoneNumber") String phoneNumberEdit
     ) {
-        dao.editCompany(nameEdit, addressEdit, postalCodeEdit, cityEdit, countryEdit, phoneNumberEdit);
+        manager.editCompany(nameEdit, addressEdit, postalCodeEdit, cityEdit, countryEdit, phoneNumberEdit);
         return "<a href='/company'>Keer terug</a>";
     }
 }

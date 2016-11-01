@@ -17,7 +17,7 @@ public class CompanyDAO {
     private String postalCode = "1234AB";
     private String city = "Breda";
     private String country = "Nederland";
-    private int phoneNumber = 0761234567;
+    private String phoneNumber = "0761234567";
         
     private Company company = new Company(name, address, postalCode, city, country, phoneNumber);
     
@@ -25,14 +25,12 @@ public class CompanyDAO {
         return company;
     }
     
-    public boolean editCompany(String name, String address, String postalCode, String city, String country, int phoneNumber) {
+    public void editCompany(String name, String address, String postalCode, String city, String country, String phoneNumber) {
         company.setName(name);
         company.setAddress(address);
         company.setPostalCode(postalCode);
         company.setCity(city);
         company.setCountry(country);
         company.setPhoneNumber(phoneNumber);
-        
-        return true;
     }
 }
