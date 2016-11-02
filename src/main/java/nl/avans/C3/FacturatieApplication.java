@@ -7,8 +7,7 @@ import nl.avans.C3.Config.ProductionContext;
 import nl.avans.C3.Config.SwaggerConfig;
 
 //imports test code Stefan
-import nl.avans.C3.DataStorage.CompanyDAO;
-import nl.avans.C3.Domain.Company;
+import nl.avans.C3.BusinessLogic.PaymentManager;
 //einde imports test code Stefan
 
 import javafx.application.Application;
@@ -38,7 +37,7 @@ public class FacturatieApplication {
     
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
     
-    public static void main(String[] args) {  
+    public static void main(String[] args) throws Exception {  
         //ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         
         //ClientService service = appContext.getBean("clientService", ClientService.class);
@@ -48,27 +47,8 @@ public class FacturatieApplication {
         
         
         //test code van Stefan //
-        System.out.println("- STAMGEGEVENS -\n");
-        
-        CompanyDAO dao = new CompanyDAO();
-        
-        System.out.println("Bedrijfsnaam: " + dao.getCompany().getName());
-        System.out.println("Adres: " + dao.getCompany().getAddress());
-        System.out.println("Postcode: " + dao.getCompany().getPostalCode());
-        System.out.println("Plaats: " + dao.getCompany().getCity());
-        System.out.println("Land: " + dao.getCompany().getCountry());
-        System.out.println("Telefoonnummer: " + dao.getCompany().getPhoneNumber());
-        
-        dao.editCompany("Fysiotherapiepraktijk Mals", "Straat 2", "1234AB", "Breda", "Nederland", "0761234123");
-        
-        System.out.println("\nAanpassingen\n");
-        
-        System.out.println("Bedrijfsnaam: " + dao.getCompany().getName());
-        System.out.println("Adres: " + dao.getCompany().getAddress());
-        System.out.println("Postcode: " + dao.getCompany().getPostalCode());
-        System.out.println("Plaats: " + dao.getCompany().getCity());
-        System.out.println("Land: " + dao.getCompany().getCountry());
-        System.out.println("Telefoonnummer: " + dao.getCompany().getPhoneNumber());
+        PaymentManager manager = new PaymentManager();
+        manager.generateSepa();
         //einde test code van Stefan
         
         
