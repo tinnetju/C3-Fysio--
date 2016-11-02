@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nl.avans.C3.Controller;
+package nl.avans.C3.BusinessLogic;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
