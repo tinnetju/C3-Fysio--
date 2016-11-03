@@ -6,13 +6,15 @@
 package nl.avans.C3.DataStorage;
 
 import nl.avans.C3.Domain.Company;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Stefan
  */
-public class CompanyDAO {
-    private String name = "Fysiotherapiepraktijk Moker";
+@Repository
+public class CompanyRepository {
+    private String name = "Zorgverzekering CZ";
     private String address = "Straat 1";
     private String postalCode = "1234AB";
     private String city = "Breda";

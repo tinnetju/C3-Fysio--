@@ -5,6 +5,7 @@
  */
 package nl.avans.C3.BusinessLogic;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import nl.avans.C3.BusinessLogic.CompanyManager;
 /**
  *
  * @author Stefan
@@ -20,7 +20,7 @@ import nl.avans.C3.BusinessLogic.CompanyManager;
 
 @Controller
 public class CompanyController {
-    private CompanyManager manager = new CompanyManager();
+    private CompanyService companyService;
     
     private String name;
     private String address;
@@ -29,24 +29,29 @@ public class CompanyController {
     private String country;
     private String phoneNumber;
     
+    @Autowired
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
+    
     @RequestMapping("/company")
     String company(Model model) {
-        name = manager.getCompany().getName();
+        name = companyService.getCompany().getName();
         model.addAttribute("name", name);
         
-        address = manager.getCompany().getAddress();
+        address = companyService.getCompany().getAddress();
         model.addAttribute("address", address);
         
-        postalCode = manager.getCompany().getPostalCode();
+        postalCode = companyService.getCompany().getPostalCode();
         model.addAttribute("postalCode", postalCode);
         
-        city = manager.getCompany().getCity();
+        city = companyService.getCompany().getCity();
         model.addAttribute("city", city);
         
-        country = manager.getCompany().getCountry();
+        country = companyService.getCompany().getCountry();
         model.addAttribute("country", country);
         
-        phoneNumber = manager.getCompany().getPhoneNumber();
+        phoneNumber = companyService.getCompany().getPhoneNumber();
         model.addAttribute("phoneNumber", phoneNumber);
         
         return "company";
@@ -54,22 +59,22 @@ public class CompanyController {
    
     @RequestMapping(value="/editcompany")
     String editcompany(Model model) {
-        name = manager.getCompany().getName();
+        name = companyService.getCompany().getName();
         model.addAttribute("name", name);
         
-        address = manager.getCompany().getAddress();
+        address = companyService.getCompany().getAddress();
         model.addAttribute("address", address);
         
-        postalCode = manager.getCompany().getPostalCode();
+        postalCode = companyService.getCompany().getPostalCode();
         model.addAttribute("postalCode", postalCode);
         
-        city = manager.getCompany().getCity();
+        city = companyService.getCompany().getCity();
         model.addAttribute("city", city);
         
-        country = manager.getCompany().getCountry();
+        country = companyService.getCompany().getCountry();
         model.addAttribute("country", country);
         
-        phoneNumber = manager.getCompany().getPhoneNumber();
+        phoneNumber = companyService.getCompany().getPhoneNumber();
         model.addAttribute("phoneNumber", phoneNumber);
         
         return "editcompany";
@@ -85,7 +90,7 @@ public class CompanyController {
             @RequestParam(value = "country") String countryEdit,
             @RequestParam(value = "phoneNumber") String phoneNumberEdit
     ) {
-        manager.editCompany(nameEdit, addressEdit, postalCodeEdit, cityEdit, countryEdit, phoneNumberEdit);
+        companyService.editCompany(nameEdit, addressEdit, postalCodeEdit, cityEdit, countryEdit, phoneNumberEdit);
         return "<a href='/company'>Keer terug</a>";
     }
 }
