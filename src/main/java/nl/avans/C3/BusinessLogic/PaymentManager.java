@@ -349,8 +349,8 @@ public class PaymentManager {
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         DOMSource source = new DOMSource(document);
         
-        StreamResult streamResult = new StreamResult(new File("C:\\Users\\Stefan\\Desktop\\" + fileId + ".xml"));
+        //StreamResult streamResult = new StreamResult(new File("C:\\Users\\Stefan\\Desktop\\" + fileId + ".xml"));
         
-        transformer.transform(source, streamResult);
+        //transformer.transform(source, streamResult);
     }
 }
