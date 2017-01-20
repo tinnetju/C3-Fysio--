@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import nl.avans.C3.Domain.Client;
 import nl.avans.C3.Domain.ClientNotFoundException;
 import nl.avans.C3.Domain.Insurance;
+import nl.avans.C3.Domain.SearchQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +39,47 @@ public class ClientController {
     }
     
     @RequestMapping(value = "/clients", method = RequestMethod.GET)
-    public String Index(ModelMap model) {
+    public String Index(ModelMap model, @ModelAttribute("searchQuery") String searchQuery) {
         List<Client> clients = clientService.findAllClients();
-
+        
         model.addAttribute("clients", clients);
+        InitializeSearchOptions(model);
+        
+        String henk = searchQuery;
         
         return "clients";
-    }    
+    }
+    
+    /*@RequestMapping(value = "/clients", method = RequestMethod.GET)
+    public String initForm(ModelMap model) {
+        SearchQuery searchQuery = new SearchQuery();
+        model.addAttribute("SearchQuery", searchQuery);
+        InitializeSearchOptions(model);
+        return "clients";
+    }
+ 
+    @RequestMapping(value = "/clients", method = RequestMethod.POST)
+    public String submitForm(ModelMap model, @Valid SearchQuery SearchQuery, BindingResult result) {
+        model.addAttribute("searchQuery", searchQuery);
+        String returnVal = "successSearchQuery";
+        if(result.hasErrors()) {
+            InitializeSearchOptions(model);
+            returnVal = "searchQuery";
+        } else {
+            model.addAttribute("searchQuery", searchQuery);
+        }      
+        return returnVal;
+    }*/
+
+    private void InitializeSearchOptions(ModelMap model)
+    {
+        ArrayList<String> searchOptions = new ArrayList<>();
+        searchOptions.add("Voornaam");
+        searchOptions.add("Achternaam");
+        searchOptions.add("BSN");
+        searchOptions.add("Woonplaats");
+        searchOptions.add("E-mail adres");
+    }
     
     @RequestMapping(value = "/client/viewclient/{BSN}", method = RequestMethod.GET)
     public String getClientByBSN(@PathVariable int BSN, ModelMap model) throws ClientNotFoundException {

@@ -1,9 +1,24 @@
 <html>
 
 <body>
+    <a th:href="@{/client/create}">Cliënt toevoegen</a>
     <div th:if="${info}">
         <h2 th:text="${info}"/>
     </div>
+    
+    <br/>
+    <br/>
+    
+    <form id="submitForm" action="#" th:action="@{/clients}" th:object="${SearchQuery}" method="post">
+        <select>
+         <option th:each="searchOption : ${searchOptions}" 
+              th:value="${SearchQuery.searchOption}" 
+              th:text="${searchOption}">Wireframe</option>
+        </select>
+
+        <input type="text" class="form-control" id="searchquery" th:field="*{SearchQuery}"/>
+        <button type="submit" class="btn btn-primary" name="search">Zoeken</button>
+    </form>
     
     <table class="table table-striped table-hover">
         <thead>

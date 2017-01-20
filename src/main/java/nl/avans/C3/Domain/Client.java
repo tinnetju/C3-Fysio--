@@ -6,6 +6,7 @@
 package nl.avans.C3.Domain;
 
 import java.util.ArrayList;
+import java.sql.Date;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -21,6 +22,9 @@ public class Client {
     
     @NotNull
     private String firstName;
+    
+    @NotNull
+    private Date dateOfBirth;
     
     @NotNull
     private String city;
@@ -52,10 +56,11 @@ public class Client {
         this.invoices = new ArrayList<>();
     }
     
-    public Client(int BSN, String lastName, String firstName, String city, String postalcode, String address, String IBAN, boolean incasso, String emailaddress, String telephonenumber, InsuranceContract contract, ArrayList<Invoice> invoices){
+    public Client(int BSN, String lastName, String firstName, Date dateOfBirth, String city, String postalcode, String address, String IBAN, boolean incasso, String emailaddress, String telephonenumber, InsuranceContract contract, ArrayList<Invoice> invoices){
         this.BSN = BSN;
         this.lastName = lastName;
         this.firstName = firstName;
+        this.dateOfBirth = dateOfBirth;
         this.city = city;
         this.postalCode = postalcode;
         this.address = address;
@@ -98,6 +103,14 @@ public class Client {
         this.firstName = firstName;
     }
 
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+    
     public String getCity() {
         return city;
     }
