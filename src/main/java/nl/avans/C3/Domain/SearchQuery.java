@@ -5,22 +5,22 @@ package nl.avans.C3.Domain;
  * @author Tinne
  */
 public class SearchQuery {
-    private String SearchWords;
-    private String SearchType;
+    private String searchWords;
+    private String searchOption;
     
     public String getSearchWords() {
-        return SearchWords;
+        return searchWords;
     }
 
     public void setSearchWords(String SearchWords) {
-        this.SearchWords = SearchWords;
+        this.searchWords = SearchWords;
     }
 
-    public String getSearchType() {
-        return SearchType;
+    public String getSearchOption() {
+        return searchOption;
     }
 
-    public void setSearchType(String SearchType) {
-        this.SearchType = SearchType;
+    public void setSearchOption(String SearchType) {
+        this.searchOption = SearchType;
     }
 }

@@ -48,11 +48,27 @@ public class ClientRepository implements ClientRepositoryIF {
     @Transactional(readOnly=true)
     @Override
     public Client findClientByBSN(int BSN) {
-        return jdbcTemplate.queryForObject(
-                "SELECT * FROM client WHERE BSN=?",
-                new Object[]{BSN}, new ClientRowMapper());
+        return jdbcTemplate.queryForObject("SELECT * FROM client WHERE BSN=?", new Object[]{BSN}, new ClientRowMapper());
     }
 
+    @Transactional(readOnly=true)
+    @Override
+    public List<Client> findClientsByFirstName(String firstName) {
+        return jdbcTemplate.query("SELECT * FROM client WHERE FirstName LIKE CONCAT('%',?,'%')", new Object[]{firstName}, new ClientRowMapper());
+    }
+    
+    @Transactional(readOnly=true)
+    @Override
+    public List<Client> findClientsByLastName(String lastName) {
+        return jdbcTemplate.query("SELECT * FROM client WHERE LastName LIKE CONCAT('%',?,'%')", new Object[]{lastName}, new ClientRowMapper());
+    }
+    
+    @Transactional(readOnly=true)
+    @Override
+    public List<Client> findClientsByEmailAddress(String emailAddress) {
+        return jdbcTemplate.query("SELECT * FROM client WHERE EmailAddress LIKE CONCAT('%',?,'%')", new Object[]{emailAddress}, new ClientRowMapper());
+    }
+    
     @Override
     public Client create(final Client client) {
         final String sql = "INSERT INTO client(BSN, FirstName, LastName, DateOfBirth, City, PostalCode, Address, IBAN, Incasso, EmailAddress, TelephoneNumber) " +

@@ -39,46 +39,56 @@ public class ClientController {
     }
     
     @RequestMapping(value = "/clients", method = RequestMethod.GET)
-    public String Index(ModelMap model, @ModelAttribute("searchQuery") String searchQuery) {
+    public String Index(ModelMap model) {
         List<Client> clients = clientService.findAllClients();
         
-        model.addAttribute("clients", clients);
         InitializeSearchOptions(model);
+        SearchQuery searchquery = new SearchQuery();
         
-        String henk = searchQuery;
+        model.addAttribute("clients", clients);
+        model.addAttribute("searchquery", searchquery);
         
         return "clients";
     }
     
-    /*@RequestMapping(value = "/clients", method = RequestMethod.GET)
-    public String initForm(ModelMap model) {
-        SearchQuery searchQuery = new SearchQuery();
-        model.addAttribute("SearchQuery", searchQuery);
+    @RequestMapping(value = "/clients", method = RequestMethod.POST)
+    public String Index(@Valid SearchQuery searchquery, final BindingResult bindingResult, final ModelMap model) {
+        List<Client> clients = new ArrayList<Client>();
+        
         InitializeSearchOptions(model);
+        
+        if(searchquery.getSearchWords().length() > 0)
+        {
+            try {
+                switch (searchquery.getSearchOption()) {
+                    case "Voornaam":
+                        clients = clientService.findClientsByFirstName(searchquery.getSearchWords());
+                        break;
+                    case "Achternaam":
+                        clients = clientService.findClientsByLastname(searchquery.getSearchWords());
+                        break;
+                    case "E-mailadres":
+                        clients = clientService.findClientsByEmailAddress(searchquery.getSearchWords());
+                        break;
+                }
+            } catch(ClientNotFoundException ex){
+                //logger.error(ex.getMessage());
+            }
+        }
+        
+        model.addAttribute("clients", clients);
+        model.addAttribute("searchquery", searchquery);
         return "clients";
     }
- 
-    @RequestMapping(value = "/clients", method = RequestMethod.POST)
-    public String submitForm(ModelMap model, @Valid SearchQuery SearchQuery, BindingResult result) {
-        model.addAttribute("searchQuery", searchQuery);
-        String returnVal = "successSearchQuery";
-        if(result.hasErrors()) {
-            InitializeSearchOptions(model);
-            returnVal = "searchQuery";
-        } else {
-            model.addAttribute("searchQuery", searchQuery);
-        }      
-        return returnVal;
-    }*/
 
     private void InitializeSearchOptions(ModelMap model)
     {
         ArrayList<String> searchOptions = new ArrayList<>();
         searchOptions.add("Voornaam");
         searchOptions.add("Achternaam");
-        searchOptions.add("BSN");
-        searchOptions.add("Woonplaats");
-        searchOptions.add("E-mail adres");
+        searchOptions.add("E-mailadres");
+        
+        model.addAttribute("searchOptions", searchOptions);
     }
     
     @RequestMapping(value = "/client/viewclient/{BSN}", method = RequestMethod.GET)
