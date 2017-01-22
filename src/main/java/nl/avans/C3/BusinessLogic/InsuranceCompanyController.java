@@ -19,63 +19,63 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-public class CompanyController {
-    private CompanyService companyService;
+public class InsuranceCompanyController {
+    private InsuranceCompanyService insuranceCompanyService;
     
     private String name;
     private String address;
     private String postalCode;
     private String city;
     private String country;
-    private String phoneNumber;
+    private int kVK;
     
     @Autowired
-    public CompanyController(CompanyService companyService) {
-        this.companyService = companyService;
+    public InsuranceCompanyController(InsuranceCompanyService insuranceCompanyService) {
+        this.insuranceCompanyService = insuranceCompanyService;
     }
     
     @RequestMapping("/company")
     String company(Model model) {
-        name = companyService.getCompany().getName();
+        name = insuranceCompanyService.getInsuranceCompany().getName();
         model.addAttribute("name", name);
         
-        address = companyService.getCompany().getAddress();
-        model.addAttribute("address", address);
-        
-        postalCode = companyService.getCompany().getPostalCode();
-        model.addAttribute("postalCode", postalCode);
-        
-        city = companyService.getCompany().getCity();
+        city = insuranceCompanyService.getInsuranceCompany().getCity();
         model.addAttribute("city", city);
         
-        country = companyService.getCompany().getCountry();
+        postalCode = insuranceCompanyService.getInsuranceCompany().getPostalCode();
+        model.addAttribute("postalCode", postalCode);
+        
+        address = insuranceCompanyService.getInsuranceCompany().getAddress();
+        model.addAttribute("address", address);
+        
+        country = insuranceCompanyService.getInsuranceCompany().getCountry();
         model.addAttribute("country", country);
         
-        phoneNumber = companyService.getCompany().getPhoneNumber();
-        model.addAttribute("phoneNumber", phoneNumber);
+        kVK = insuranceCompanyService.getInsuranceCompany().getKVK();
+        model.addAttribute("kVK", kVK);
         
         return "company";
     }
    
     @RequestMapping(value="/editcompany")
     String editcompany(Model model) {
-        name = companyService.getCompany().getName();
+        name = insuranceCompanyService.getInsuranceCompany().getName();
         model.addAttribute("name", name);
         
-        address = companyService.getCompany().getAddress();
-        model.addAttribute("address", address);
-        
-        postalCode = companyService.getCompany().getPostalCode();
-        model.addAttribute("postalCode", postalCode);
-        
-        city = companyService.getCompany().getCity();
+        city = insuranceCompanyService.getInsuranceCompany().getCity();
         model.addAttribute("city", city);
         
-        country = companyService.getCompany().getCountry();
+        postalCode = insuranceCompanyService.getInsuranceCompany().getPostalCode();
+        model.addAttribute("postalCode", postalCode);
+        
+        address = insuranceCompanyService.getInsuranceCompany().getAddress();
+        model.addAttribute("address", address);
+        
+        country = insuranceCompanyService.getInsuranceCompany().getCountry();
         model.addAttribute("country", country);
         
-        phoneNumber = companyService.getCompany().getPhoneNumber();
-        model.addAttribute("phoneNumber", phoneNumber);
+        kVK = insuranceCompanyService.getInsuranceCompany().getKVK();
+        model.addAttribute("kVK", kVK);
         
         return "editcompany";
     }
@@ -84,13 +84,13 @@ public class CompanyController {
     @ResponseBody
     public String companySubmit(
             @RequestParam(value = "name") String nameEdit,
-            @RequestParam(value = "address") String addressEdit,
-            @RequestParam(value = "postalCode") String postalCodeEdit,
             @RequestParam(value = "city") String cityEdit,
+            @RequestParam(value = "postalCode") String postalCodeEdit,
+            @RequestParam(value = "address") String addressEdit,
             @RequestParam(value = "country") String countryEdit,
-            @RequestParam(value = "phoneNumber") String phoneNumberEdit
+            @RequestParam(value = "kVK") int kVKEdit
     ) {
-        companyService.editCompany(nameEdit, addressEdit, postalCodeEdit, cityEdit, countryEdit, phoneNumberEdit);
+        insuranceCompanyService.editInsuranceCompany(nameEdit, cityEdit, postalCodeEdit, addressEdit, countryEdit, kVKEdit);
         return "<a href='/company'>Keer terug</a>";
     }
 }
