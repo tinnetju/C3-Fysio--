@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import nl.avans.C3.DataStorage.InsuranceRepositoryIF;
+import nl.avans.C3.DataStorage.InsuranceTypeRepositoryIF;
 import nl.avans.C3.Domain.Client;
 import nl.avans.C3.Domain.ClientNotFoundException;
 import nl.avans.C3.Domain.Insurance;
 import nl.avans.C3.Domain.InsuranceNotFoundException;
+import nl.avans.C3.Domain.InsuranceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,8 @@ import org.springframework.ui.Model;
 
 
 @Service
-public class InsuranceService {
-    private InsuranceRepositoryIF insuranceRepository;
+public class InsuranceTypeService {
+    private InsuranceTypeRepositoryIF insuranceTypeRepository;
     //private InsuranceService insuranceService;
     
     /*@Autowired
@@ -38,44 +40,32 @@ public class InsuranceService {
     }*/
    
     @Autowired
-    public void setInsuranceRepository(InsuranceRepositoryIF insuranceRepositoryIF) {
-        this.insuranceRepository = insuranceRepositoryIF;
+    public void setInsuranceTypeRepository(InsuranceTypeRepositoryIF insuranceTypeRepositoryIF) {
+        this.insuranceTypeRepository = insuranceTypeRepositoryIF;
     }
     
-    public List<Insurance> findAllInsurances() {
-        return insuranceRepository.findAll();
+    public List<InsuranceType> findAllInsuranceTypes() {
+        return insuranceTypeRepository.findAll();
     }
     
-    public Insurance findInsuranceById(int ID) throws InsuranceNotFoundException {
-        Insurance insurance = null;
+    public InsuranceType findInsuranceTypeById(int ID) throws InsuranceNotFoundException {
+        InsuranceType insuranceType = null;
 
-        insurance = insuranceRepository.findInsuranceById(ID);
-        if(insurance.equals(null)) {
+        insuranceType = insuranceTypeRepository.findInsuranceTypeById(ID);
+        if(insuranceType.equals(null)) {
             throw new InsuranceNotFoundException("Exception!");
         } else {
-            return insurance;
+            return insuranceType;
         }
     }
-    public Insurance create(final Insurance insurance)  {
-        return insuranceRepository.create(insurance);
+    public InsuranceType create(final InsuranceType insuranceType)  {
+        return insuranceTypeRepository.create(insuranceType);
     }
-    public void edit(final Insurance insurance, int ID)  {
-        insuranceRepository.edit(insurance, ID);
+    public void edit(final InsuranceType insuranceType, int ID)  {
+        insuranceTypeRepository.edit(insuranceType, ID);
     }
     public void delete (int ID)  {
-        insuranceRepository.deleteInsuranceById(ID);
+        insuranceTypeRepository.deleteInsuranceTypeById(ID);
     }    
-    public List<Client> getClientsForInsurances(int ID) throws InsuranceNotFoundException
-    {
-        Insurance insurance = null;
-        List<Client> clients = null; //set in else 
-        
-        
-        insurance = insuranceRepository.findInsuranceById(ID);
-        if(insurance.equals(null)) {
-            throw new InsuranceNotFoundException("Exception!");
-        } else {
-            return clients;
-        }
-    }
+
 }

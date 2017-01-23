@@ -17,7 +17,6 @@ public class Insurance {
     private String name;
     private BigDecimal price;
     private int sessionsReimbursed;
-    private InsuranceCompany insuranceCompany;
     
     public Insurance(){
         
@@ -86,17 +85,4 @@ public class Insurance {
         this.sessionsReimbursed = sessionsReimbursed;
     }
 
-    /**
-     * @return the insuranceCompany
-     */
-    public InsuranceCompany getInsuranceCompany() {
-        return insuranceCompany;
-    }
-
-    /**
-     * @param insuranceCompany the insuranceCompany to set
-     */
-    public void setInsuranceCompany(InsuranceCompany insuranceCompany) {
-        this.insuranceCompany = insuranceCompany;
-    }
 }

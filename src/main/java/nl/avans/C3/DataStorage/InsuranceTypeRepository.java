@@ -24,18 +24,19 @@ import java.util.List;
 import java.util.Map;
 import nl.avans.C3.Domain.Client;
 import nl.avans.C3.Domain.Insurance;
+import nl.avans.C3.Domain.InsuranceType;
 
 /**
  *
  * @author Thom
  */
 @Repository
-public class InsuranceRepository implements InsuranceRepositoryIF {
+public class InsuranceTypeRepository implements InsuranceTypeRepositoryIF {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public InsuranceRepository(DataSource dataSource) 
+    public InsuranceTypeRepository(DataSource dataSource) 
     { 
         this.jdbcTemplate = new JdbcTemplate(dataSource); 
     }
@@ -43,54 +44,54 @@ public class InsuranceRepository implements InsuranceRepositoryIF {
 
     @Transactional(readOnly=true)
     @Override
-    public List<Insurance> findAll() {
-        List<Insurance> result = jdbcTemplate.query("SELECT * FROM insurance", new InsuranceRowMapper());
+    public List<InsuranceType> findAll() {
+        List<InsuranceType> result = jdbcTemplate.query("SELECT * FROM insurancetype", new InsuranceTypeRowMapper());
         return result;
     }
     
     @Transactional(readOnly=true)
     @Override
-    public Insurance findInsuranceById(int ID) {
+    public InsuranceType findInsuranceTypeById(int ID) {
         return jdbcTemplate.queryForObject(
-                "SELECT * FROM insurance WHERE InsuranceID=?",
-                new Object[]{ID}, new InsuranceRowMapper());
+                "SELECT * FROM insuranceType WHERE InsuranceTypeID=?",
+                new Object[]{ID}, new InsuranceTypeRowMapper());
     }
 
 
     @Override
-    public Insurance create(final Insurance insurance) {
-        final String sql = "INSERT INTO insurance(InsuranceName, InsurancePrice) " +
-                "VALUES(?,?)";
-
-        // KeyHolder gaat de auto increment key uit de database bevatten.
+    public InsuranceType create(final InsuranceType insuranceType) {
+        final String sql = "INSERT INTO insurancetype(InsuranceTypeName, InsuranceTypeDescription,ReimbursementDescription,ReimbursementAmount) " +
+                "VALUES(?,?,?,?)";
         KeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
 
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                //ps.setInt(1, insurance.getID());
-                ps.setString(1, insurance.getName());
-                ps.setBigDecimal(2, insurance.getPrice());
+                ps.setString(1, insuranceType.getName());
+                ps.setString(2, insuranceType.getDescription());
+                ps.setString(3, insuranceType.getReimbursementDescription());               
+                ps.setInt(4, insuranceType.getReimbursementAmount());                             
                 return ps;
             }
         }, holder);
 
-        return insurance;
+        return insuranceType;
     }
     
     @Override
-    public void edit(final Insurance insurance, int ID) {
+    public void edit(final InsuranceType insuranceType, int ID) {
 //        final String sql = "UPDATE insurance SET(ID, name, price, sessionsReimbursed) " +
 //                "VALUES(?,?,?,?)WHERE ID = ?";
-		final String sql = "UPDATE insurance SET`InsuranceName` = IFNULL(?, InsuranceName),`InsurancePrice` = IFNULL(?, InsurancePrice)" +
-                "WHERE InsuranceID = ?";
-                // KeyHolder gaat de auto increment key uit de database bevatten.
+		final String sql = "UPDATE insurancetype SET`InsuranceTypeName` = IFNULL(?, InsuranceTypeName),`InsuranceTypeDescription` = IFNULL(?, InsuranceTypeDescription),`ReimbursementDescription` = IFNULL(?, InsuranceTypeDescription),`ReimbursementAmount` = IFNULL(?, ReimbursementAmount)" +
+                "WHERE InsuranceTypeID = ?";
         jdbcTemplate.update((Connection connection) -> {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, insurance.getName());
-            ps.setBigDecimal(2, insurance.getPrice());
-            ps.setInt(3, ID);
+            ps.setString(1, insuranceType.getName());
+            ps.setString(2, insuranceType.getDescription());
+            ps.setString(3, insuranceType.getReimbursementDescription());
+            ps.setInt(4, insuranceType.getReimbursementAmount());
+            ps.setInt(5, ID);
             return ps;
         });
 		
@@ -99,7 +100,7 @@ public class InsuranceRepository implements InsuranceRepositoryIF {
     
 
     @Override
-    public void deleteInsuranceById(int ID) {
-        jdbcTemplate.update("DELETE FROM insurance WHERE InsuranceID=?", ID);
+    public void deleteInsuranceTypeById(int ID) {
+        jdbcTemplate.update("DELETE FROM insurancetype WHERE InsuranceTypeID=?", ID);
     }
 }

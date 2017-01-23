@@ -69,6 +69,12 @@ public class ClientRepository implements ClientRepositoryIF {
         return jdbcTemplate.query("SELECT * FROM client WHERE EmailAddress LIKE CONCAT('%',?,'%')", new Object[]{emailAddress}, new ClientRowMapper());
     }
     
+    @Transactional(readOnly=true)
+    @Override
+    public List<Client> findClientByBSN(String bSN) {
+        return jdbcTemplate.query("SELECT * FROM client WHERE BSN = ?", new Object[]{bSN}, new ClientRowMapper());
+    }
+    
     @Override
     public Client create(final Client client) {
         final String sql = "INSERT INTO client(BSN, FirstName, LastName, DateOfBirth, City, PostalCode, Address, IBAN, Incasso, EmailAddress, TelephoneNumber) " +

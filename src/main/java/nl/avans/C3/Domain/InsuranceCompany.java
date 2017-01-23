@@ -9,77 +9,97 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Stefan
+ * @author Thom
  */
 public class InsuranceCompany {
     private String name;
     private String city;
     private String postalCode;
     private String address;
-    private String country;
-    private int kVK;
+    private int KVK;
     private ArrayList<Insurance> insurances;
     
-    public InsuranceCompany(){
-        
+    public InsuranceCompany() {
+
     }
     
-    public InsuranceCompany(String name, String city, String postalCode, String address, String country, int kVK){
+    public InsuranceCompany(String name, String city, String postalCode, String address, int KVK){
         this.name = name;
         this.city = city;
         this.postalCode = postalCode;
         this.address = address;
-        this.country = country;
-        this.kVK = kVK;
+        this.KVK = KVK;
     }
 
-    //getters
+
+
+    /**
+     * @return the name
+     */
     public String getName() {
         return name;
     }
-    
-    public String getCity() {
-        return city;
-    }
-    
-    public String getPostalCode() {
-        return postalCode;
-    }
-    
-    public String getAddress() {
-        return address;
-    }
-    
-    public String getCountry() {
-        return country;
-    }
-    
-    public int getKVK() {
-        return kVK;
-    }
 
-    //setters
+    /**
+     * @param name the name to set
+     */
     public void setName(String name) {
         this.name = name;
     }
-    
+
+    /**
+     * @return the city
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * @param city the city to set
+     */
     public void setCity(String city) {
         this.city = city;
     }
-    
+
+    /**
+     * @return the postalCode
+     */
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    /**
+     * @param postalCode the postalCode to set
+     */
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
-    
+
+    /**
+     * @return the address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the address to set
+     */
     public void setAddress(String address) {
         this.address = address;
     }
-    
-    public void setCountry(String country) {
-        this.country = country;
+
+    /**
+     * @return the KVK
+     */
+    public int getKVK() {
+        return KVK;
     }
-    
-    public void setKVK(int kVK) {
-        this.kVK = kVK;
+
+    /**
+     * @param KVK the KVK to set
+     */
+    public void setKVK(int KVK) {
+        this.KVK = KVK;
     }
 }
