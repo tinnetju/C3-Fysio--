@@ -48,15 +48,31 @@ public class ClientRepository implements ClientRepositoryIF {
     @Transactional(readOnly=true)
     @Override
     public Client findClientByBSN(int BSN) {
-        return jdbcTemplate.queryForObject(
-                "SELECT * FROM client WHERE BSN=?",
-                new Object[]{BSN}, new ClientRowMapper());
+        return jdbcTemplate.queryForObject("SELECT * FROM client WHERE BSN=?", new Object[]{BSN}, new ClientRowMapper());
     }
 
+    @Transactional(readOnly=true)
+    @Override
+    public List<Client> findClientsByFirstName(String firstName) {
+        return jdbcTemplate.query("SELECT * FROM client WHERE FirstName LIKE CONCAT('%',?,'%')", new Object[]{firstName}, new ClientRowMapper());
+    }
+    
+    @Transactional(readOnly=true)
+    @Override
+    public List<Client> findClientsByLastName(String lastName) {
+        return jdbcTemplate.query("SELECT * FROM client WHERE LastName LIKE CONCAT('%',?,'%')", new Object[]{lastName}, new ClientRowMapper());
+    }
+    
+    @Transactional(readOnly=true)
+    @Override
+    public List<Client> findClientsByEmailAddress(String emailAddress) {
+        return jdbcTemplate.query("SELECT * FROM client WHERE EmailAddress LIKE CONCAT('%',?,'%')", new Object[]{emailAddress}, new ClientRowMapper());
+    }
+    
     @Override
     public Client create(final Client client) {
-        final String sql = "INSERT INTO client(BSN, FirstName, LastName, City, PostalCode, Address, IBAN, Incasso, EmailAddress, TelephoneNumber) " +
-                "VALUES(?,?,?,?,?,?,?,?,?,?)";
+        final String sql = "INSERT INTO client(BSN, FirstName, LastName, DateOfBirth, City, PostalCode, Address, IBAN, Incasso, EmailAddress, TelephoneNumber) " +
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 
         // KeyHolder gaat de auto increment key uit de database bevatten.
         KeyHolder holder = new GeneratedKeyHolder();
@@ -68,13 +84,14 @@ public class ClientRepository implements ClientRepositoryIF {
                 ps.setInt(1, client.getBSN());
                 ps.setString(2, client.getFirstName());
                 ps.setString(3, client.getLastName());
-                ps.setString(4, client.getCity());
-                ps.setString(5, client.getPostalCode());
-                ps.setString(6, client.getAddress());
-                ps.setString(7, client.getIBAN());
-                ps.setBoolean(8, client.isIncasso());
-                ps.setString(9, client.getEmailAddress());
-                ps.setString(10, client.getTelephoneNumber());
+                ps.setDate(4, client.getDateOfBirth());
+                ps.setString(5, client.getCity());
+                ps.setString(6, client.getPostalCode());
+                ps.setString(7, client.getAddress());
+                ps.setString(8, client.getIBAN());
+                ps.setBoolean(9, client.isIncasso());
+                ps.setString(10, client.getEmailAddress());
+                ps.setString(11, client.getTelephoneNumber());
                 return ps;
             }
         }, holder);
@@ -82,8 +99,9 @@ public class ClientRepository implements ClientRepositoryIF {
         return client;
     }
 
+    @Override
     public void update(final Client client) {
-        final String sql = "UPDATE client SET FirstName = ?, City = ?, LastName = ?, PostalCode = ?, Address = ?, IBAN = ?, Incasso = ?, EmailAddress = ?, TelephoneNumber = ? WHERE BSN = ?";
+        final String sql = "UPDATE client SET FirstName = ?, LastName = ?, DateOfBirth = ?, City = ?, PostalCode = ?, Address = ?, IBAN = ?, Incasso = ?, EmailAddress = ?, TelephoneNumber = ? WHERE BSN = ?";
 
         // KeyHolder gaat de auto increment key uit de database bevatten.
         KeyHolder holder = new GeneratedKeyHolder();
@@ -94,19 +112,21 @@ public class ClientRepository implements ClientRepositoryIF {
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, client.getFirstName());
                 ps.setString(2, client.getLastName());
-                ps.setString(3, client.getCity());
-                ps.setString(4, client.getPostalCode());
-                ps.setString(5, client.getAddress());
-                ps.setString(6, client.getIBAN());
-                ps.setBoolean(7, client.isIncasso());
-                ps.setString(8, client.getEmailAddress());
-                ps.setString(9, client.getTelephoneNumber());
-                ps.setInt(10, client.getBSN());
+                ps.setDate(3, client.getDateOfBirth());
+                ps.setString(4, client.getCity());
+                ps.setString(5, client.getPostalCode());
+                ps.setString(6, client.getAddress());
+                ps.setString(7, client.getIBAN());
+                ps.setBoolean(8, client.isIncasso());
+                ps.setString(9, client.getEmailAddress());
+                ps.setString(10, client.getTelephoneNumber());
+                ps.setInt(11, client.getBSN());
                 return ps;
             }
         }, holder);
     }
     
+    @Override
     public void deleteClientByBSN(int BSN) {
         jdbcTemplate.update("DELETE FROM client WHERE BSN=?", new Object[]{BSN});
     }

@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Facturatie up to date</name>
+	<name>Facturatie</name>
 	<description>Subsysteem facturatie</description>
 
 	<parent>
@@ -84,6 +84,12 @@
                 <groupId>net.sourceforge.htmlunit</groupId>
                 <artifactId>htmlunit</artifactId>
                 <version>2.23</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>2.6.3</version>
             </dependency>
 	</dependencies>
 

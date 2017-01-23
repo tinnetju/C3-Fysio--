@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import nl.avans.C3.Domain.Client;
 import nl.avans.C3.Domain.ClientNotFoundException;
 import nl.avans.C3.Domain.Insurance;
+import nl.avans.C3.Domain.SearchQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,55 @@ public class ClientController {
     @RequestMapping(value = "/clients", method = RequestMethod.GET)
     public String Index(ModelMap model) {
         List<Client> clients = clientService.findAllClients();
-
+        
+        InitializeSearchOptions(model);
+        SearchQuery searchquery = new SearchQuery();
+        
         model.addAttribute("clients", clients);
+        model.addAttribute("searchquery", searchquery);
         
         return "clients";
-    }    
+    }
+    
+    @RequestMapping(value = "/clients", method = RequestMethod.POST)
+    public String Index(@Valid SearchQuery searchquery, final BindingResult bindingResult, final ModelMap model) {
+        List<Client> clients = new ArrayList<Client>();
+        
+        InitializeSearchOptions(model);
+        
+        if(searchquery.getSearchWords().length() > 0)
+        {
+            try {
+                switch (searchquery.getSearchOption()) {
+                    case "Voornaam":
+                        clients = clientService.findClientsByFirstName(searchquery.getSearchWords());
+                        break;
+                    case "Achternaam":
+                        clients = clientService.findClientsByLastname(searchquery.getSearchWords());
+                        break;
+                    case "E-mailadres":
+                        clients = clientService.findClientsByEmailAddress(searchquery.getSearchWords());
+                        break;
+                }
+            } catch(ClientNotFoundException ex){
+                //logger.error(ex.getMessage());
+            }
+        }
+        
+        model.addAttribute("clients", clients);
+        model.addAttribute("searchquery", searchquery);
+        return "clients";
+    }
+
+    private void InitializeSearchOptions(ModelMap model)
+    {
+        ArrayList<String> searchOptions = new ArrayList<>();
+        searchOptions.add("Voornaam");
+        searchOptions.add("Achternaam");
+        searchOptions.add("E-mailadres");
+        
+        model.addAttribute("searchOptions", searchOptions);
+    }
     
     @RequestMapping(value = "/client/viewclient/{BSN}", method = RequestMethod.GET)
     public String getClientByBSN(@PathVariable int BSN, ModelMap model) throws ClientNotFoundException {

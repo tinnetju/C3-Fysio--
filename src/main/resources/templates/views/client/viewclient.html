@@ -1,5 +1,7 @@
 <div class="container" layout:fragment="summary">
     <div>
+        <a th:href="@{/clients}">Terug</a>
+        <br/>
         <h2>Klantgegevens</h2>
         
         <div>
@@ -16,6 +18,13 @@
                 <p>
                     <b>Naam: </b>
                     <span th:text="${client.FirstName} + ' ' + ${client.LastName}"/>
+                </p>
+            </div>
+            
+            <div> 
+                <p>
+                    <b>Geboortedatum: </b>
+                    <span th:text="${client.DateOfBirth}"/>
                 </p>
             </div>
         </div>
@@ -82,4 +91,6 @@
             </div>
         </div>
     </div>
+    
+    <td><a th:href="@{/client/edit/{BSN}(BSN=${client.BSN})}" th:text="Bewerken"/> <a th:href="@{/client/delete/{BSN}(BSN=${client.BSN})}" th:text="Verwijderen"/></td>
 </div>

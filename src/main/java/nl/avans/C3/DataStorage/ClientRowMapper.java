@@ -18,6 +18,7 @@ public class ClientRowMapper implements RowMapper<Client>
         client.setBSN(rs.getInt("BSN"));
         client.setFirstName(rs.getString("FirstName"));
         client.setLastName(rs.getString("LastName"));
+        client.setDateOfBirth(rs.getDate("DateOfBirth"));
         client.setCity(rs.getString("City"));
         client.setPostalCode(rs.getString("PostalCode"));
         client.setAddress(rs.getString("Address"));

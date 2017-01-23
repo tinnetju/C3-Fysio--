@@ -58,6 +58,40 @@ public class ClientService {
         }
     }
     
+    public List<Client> findClientsByFirstName(String firstName) throws ClientNotFoundException {
+        List<Client> clients = null;
+
+        clients = clientRepository.findClientsByFirstName(firstName);
+        if(clients.equals(null) || clients.size() < 1) {
+            throw new ClientNotFoundException("Exception!");
+        } else {
+            return clients;
+        }
+    }
+    
+    public List<Client> findClientsByLastname(String lastName) throws ClientNotFoundException {
+        List<Client> clients = null;
+
+        clients = clientRepository.findClientsByLastName(lastName);
+        if(clients.equals(null) || clients.size() < 1) {
+            throw new ClientNotFoundException("Exception!");
+        } else {
+            return clients;
+        }
+    }
+    
+    public List<Client> findClientsByEmailAddress(String emailAddress) throws ClientNotFoundException {
+        List<Client> clients = null;
+
+        clients = clientRepository.findClientsByEmailAddress(emailAddress);
+        if(clients.equals(null) || clients.size() < 1) {
+            throw new ClientNotFoundException("Exception!");
+        } else {
+            return clients;
+        }
+    }
+    
+    
     public Client create(final Client client)  {
         return clientRepository.create(client);
     }
