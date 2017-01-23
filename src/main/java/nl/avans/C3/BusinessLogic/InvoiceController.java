@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -57,7 +58,7 @@ public class InvoiceController {
             try {
                 switch (searchquery.getSearchOption()) {
                     case "BSN":
-                        clients = clientService.findClientsByBSN(searchquery.getSearchWords());
+                        clients = clientService.findClientByBSN(searchquery.getSearchWords());
                         break;
                     case "Voornaam":
                         clients = clientService.findClientsByFirstName(searchquery.getSearchWords());
@@ -76,13 +77,24 @@ public class InvoiceController {
         return "invoice";
     }
 
-    private void InitializeSearchOptions(ModelMap model)
-    {
+    private void InitializeSearchOptions(ModelMap model){
         ArrayList<String> searchOptions = new ArrayList<>();
         searchOptions.add("BSN");
         searchOptions.add("Voornaam");
         searchOptions.add("Achternaam");
         
         model.addAttribute("searchOptions", searchOptions);
+    }
+    
+    @RequestMapping(value = "/clientinvoice/{BSN}", method = RequestMethod.GET)
+    public String getClientByBSN(@PathVariable int BSN, ModelMap model) throws ClientNotFoundException {
+        Client client = clientService.findClientByBSN(BSN);
+        String firstName = client.getFirstName();
+        String lastName = client.getLastName();
+        
+        model.addAttribute("firstName", firstName);
+        model.addAttribute("lastName", lastName);
+        
+        return "clientinvoice";
     }
 }
