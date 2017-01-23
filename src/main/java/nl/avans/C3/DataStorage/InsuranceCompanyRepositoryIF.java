@@ -23,14 +23,4 @@ public interface InsuranceCompanyRepositoryIF {
     public void edit(final InsuranceCompany insuranceCompany, int ID);
     
     public void deleteInsuranceCompanyByKvk(int KVK);
-import nl.avans.C3.Domain.InsuranceCompany;
-
-/**
- *
- * @author Stefan
- */
-public interface InsuranceCompanyRepositoryIF {
-    public List<InsuranceCompany> getInsuranceCompany();
-            
-    public void editInsuranceCompany(String name, String city, String postalCode, String address, String country, int kVK);
 }
