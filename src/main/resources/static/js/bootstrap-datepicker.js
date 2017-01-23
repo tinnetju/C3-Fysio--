@@ -470,5 +470,4 @@
 								'</table>'+
 							'</div>'+
 						'</div>';
-
 }( window.jQuery );

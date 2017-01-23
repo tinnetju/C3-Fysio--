@@ -27,4 +27,3 @@ public class HomeController {
         return "views/common/dashboard";
     }
 }
-
