@@ -96,7 +96,7 @@ public class InvoiceController {
         String firstName = client.getFirstName();
         String lastName = client.getLastName();
         
-        int behandelCode = 001;
+        int behandelCode = 002;
         
         Treatment treatment = invoiceService.getTreatment(behandelCode);
         

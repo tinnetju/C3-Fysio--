@@ -58,7 +58,7 @@ public class TreatmentRepository implements TreatmentRepositoryIF {
     
     @Override
     public Treatment getTreatment(int behandelCode) {
-        try {
+        /*try {
             readXML(behandelCode);
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(TreatmentRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,7 +66,7 @@ public class TreatmentRepository implements TreatmentRepositoryIF {
             Logger.getLogger(TreatmentRepository.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(TreatmentRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         
         Treatment treatment = new Treatment(behandelCode, behandelingNaam, aantalSessies, sessieDuur, tariefBehandeling);
         
