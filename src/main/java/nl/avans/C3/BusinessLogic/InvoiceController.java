@@ -56,8 +56,7 @@ public class InvoiceController {
         
         InitializeSearchOptions(model);
         
-        if(searchquery.getSearchWords().length() > 0)
-        {
+        if(searchquery.getSearchWords().length() > 0){
             try {
                 switch (searchquery.getSearchOption()) {
                     case "BSN":
@@ -96,27 +95,19 @@ public class InvoiceController {
         String firstName = client.getFirstName();
         String lastName = client.getLastName();
         
-        int behandelCode = 002;
+        //hard coded array om de behandelingen mee aan te geven
+        int[] behandelCode = {002,003};
         
-        Treatment treatment = invoiceService.getTreatment(behandelCode);
+        List<Treatment> treatments = invoiceService.getTreatments(behandelCode);
         
-        String behandelingNaam = treatment.getBehandelingNaam();
-        String aantalSessies = treatment.getAantalSessies();
-        String sessieDuur = treatment.getSessieDuur();
-        double tariefBehandeling = treatment.getTariefBehandeling();
-        
-        double totaalBedrag = tariefBehandeling;
+        //double totaalBedrag = tariefBehandeling;
         
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
         
-        model.addAttribute("behandelCode", behandelCode);
-        model.addAttribute("behandelingNaam", behandelingNaam);
-        model.addAttribute("aantalSessies", aantalSessies);
-        model.addAttribute("sessieDuur", sessieDuur);
-        model.addAttribute("tariefBehandeling", tariefBehandeling);
+        model.addAttribute("treatments", treatments);
         
-        model.addAttribute("totaalBedrag", totaalBedrag);
+        //model.addAttribute("totaalBedrag", totaalBedrag);
         
         return "clientinvoice";
     }

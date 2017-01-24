@@ -7,33 +7,32 @@
 <body>
     <h1 th:text="'Facturatie beheren van ' + ${firstName} + ' ' + ${lastName}" />
     
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Behandelcode</th>
-                <th>Behandelingnaam</th>
-                <th>Aantal sessies</th>
-                <th>Sessieduur</th>
-                <th>Tarief</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td th:text="${behandelCode}"/>
-                <td th:text="${behandelingNaam}"/>
-                <td th:text="${aantalSessies}"/>
-                <td th:text="${sessieDuur} + ' uur'"/>
-                <td th:text="'&euro;' + ${tariefBehandeling}"/>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>Totaalbedrag:</td>
-                <td th:text="'&euro;' + ${totaalBedrag}"/>
-            </tr>
-        </tbody>
-    </table>
+    <div th:if="${treatments.empty}">
+        <div>Er zijn geen klanten met onbetaalde behandelingen</div>
+    </div>
+    
+    <div th:unless="${treatments.empty}">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Behandelcode</th>
+                    <th>Behandelingnaam</th>
+                    <th>Aantal sessies</th>
+                    <th>Sessieduur</th>
+                    <th>Tarief</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="treatment : ${treatments}">
+                    <td th:text="${treatment.behandelCode}"/>
+                    <td th:text="${treatment.behandelingNaam}"/>
+                    <td th:text="${treatment.aantalSessies}"/>
+                    <td th:text="${treatment.sessieDuur} + ' uur'"/>
+                    <td th:text="'&euro;' + ${treatment.tariefBehandeling}"/>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     
     <br />
         
