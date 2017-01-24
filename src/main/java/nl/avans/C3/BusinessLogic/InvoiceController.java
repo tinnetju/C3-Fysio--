@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import nl.avans.C3.Domain.Client;
 import nl.avans.C3.Domain.ClientNotFoundException;
 import nl.avans.C3.Domain.SearchQuery;
+import nl.avans.C3.Domain.Treatment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +29,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class InvoiceController {
     private ClientService clientService;
+    private InvoiceService invoiceService;
     
     @Autowired
-    public InvoiceController(ClientService clientService) {
+    public InvoiceController(ClientService clientService, InvoiceService invoiceService) {
         this.clientService = clientService;
+        this.invoiceService = invoiceService;
     }
     
     @RequestMapping("/invoice")
@@ -89,11 +92,31 @@ public class InvoiceController {
     @RequestMapping(value = "/clientinvoice/{BSN}", method = RequestMethod.GET)
     public String getClientByBSN(@PathVariable int BSN, ModelMap model) throws ClientNotFoundException {
         Client client = clientService.findClientByBSN(BSN);
+        
         String firstName = client.getFirstName();
         String lastName = client.getLastName();
         
+        int behandelCode = 001;
+        
+        Treatment treatment = invoiceService.getTreatment(behandelCode);
+        
+        String behandelingNaam = treatment.getBehandelingNaam();
+        String aantalSessies = treatment.getAantalSessies();
+        String sessieDuur = treatment.getSessieDuur();
+        double tariefBehandeling = treatment.getTariefBehandeling();
+        
+        double totaalBedrag = tariefBehandeling;
+        
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
+        
+        model.addAttribute("behandelCode", behandelCode);
+        model.addAttribute("behandelingNaam", behandelingNaam);
+        model.addAttribute("aantalSessies", aantalSessies);
+        model.addAttribute("sessieDuur", sessieDuur);
+        model.addAttribute("tariefBehandeling", tariefBehandeling);
+        
+        model.addAttribute("totaalBedrag", totaalBedrag);
         
         return "clientinvoice";
     }

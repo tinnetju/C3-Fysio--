@@ -41,7 +41,6 @@ public class InsuranceCompanyRepository implements InsuranceCompanyRepositoryIF 
         this.jdbcTemplate = new JdbcTemplate(dataSource); 
     }
    
-
     @Transactional(readOnly=true)
     @Override
     public List<InsuranceCompany> findAll() {

@@ -7,8 +7,36 @@
 <body>
     <h1 th:text="'Facturatie beheren van ' + ${firstName} + ' ' + ${lastName}" />
     
-    <br />
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Behandelcode</th>
+                <th>Behandelingnaam</th>
+                <th>Aantal sessies</th>
+                <th>Sessieduur</th>
+                <th>Tarief</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${behandelCode}"/>
+                <td th:text="${behandelingNaam}"/>
+                <td th:text="${aantalSessies}"/>
+                <td th:text="${sessieDuur}"/>
+                <td th:text="'&euro;' + ${tariefBehandeling}"/>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Totaalbedrag:</td>
+                <td th:text="'&euro;' + ${totaalBedrag}"/>
+            </tr>
+        </tbody>
+    </table>
     
+    <br />
+        
     <a href="/invoice">Klik hier om terug te keren naar het facturatiemenu</a>
     <br />
     <br />
