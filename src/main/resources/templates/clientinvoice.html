@@ -30,8 +30,21 @@
                     <td th:text="${treatment.sessieDuur} + ' uur'"/>
                     <td th:text="'&euro;' + ${treatment.tariefBehandeling}"/>
                 </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Totaalbedrag:</td>
+                    <td th:text="'&euro;' + ${totaalBedrag}"/>
+                </tr>
             </tbody>
         </table>
+        
+        <form action="/clientinvoice" method="post">
+            <input type="hidden" th:value="${bSN}" name="bSN" />
+
+            <input type="submit" name="save" value="Factureren" />
+        </form>
     </div>
     
     <br />

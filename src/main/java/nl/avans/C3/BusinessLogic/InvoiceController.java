@@ -5,21 +5,25 @@
  */
 package nl.avans.C3.BusinessLogic;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import nl.avans.C3.Domain.Client;
 import nl.avans.C3.Domain.ClientNotFoundException;
 import nl.avans.C3.Domain.SearchQuery;
 import nl.avans.C3.Domain.Treatment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -88,27 +92,35 @@ public class InvoiceController {
         model.addAttribute("searchOptions", searchOptions);
     }
     
-    @RequestMapping(value = "/clientinvoice/{BSN}", method = RequestMethod.GET)
-    public String getClientByBSN(@PathVariable int BSN, ModelMap model) throws ClientNotFoundException {
-        Client client = clientService.findClientByBSN(BSN);
+    @RequestMapping(value = "/clientinvoice/{bSN}", method = RequestMethod.GET)
+    public String getClientByBSN(@PathVariable int bSN, ModelMap model) throws ClientNotFoundException {
+        Client client = clientService.findClientByBSN(bSN);
         
         String firstName = client.getFirstName();
         String lastName = client.getLastName();
         
         //hard coded array om de behandelingen mee aan te geven
-        int[] behandelCode = {002,003};
+        int[] behandelCode = {002,003,002,006,005};
         
         List<Treatment> treatments = invoiceService.getTreatments(behandelCode);
-        
-        //double totaalBedrag = tariefBehandeling;
+        double totaalBedrag = invoiceService.getTotaalBedrag(behandelCode);
         
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
-        
-        model.addAttribute("treatments", treatments);
-        
-        //model.addAttribute("totaalBedrag", totaalBedrag);
+        model.addAttribute("treatments", treatments); 
+        model.addAttribute("totaalBedrag", totaalBedrag);
+        model.addAttribute("bSN", bSN);
         
         return "clientinvoice";
+    }
+    
+    @RequestMapping(value = "/clientinvoice", method = RequestMethod.POST)
+    @ResponseBody
+    public String invoiceSubmit(@RequestParam(value = "bSN") String invoiceBSN) throws TransformerException, ParseException, ClientNotFoundException, ParserConfigurationException {
+        int[] behandelCode = {002,003,002,006,005};
+        //invoiceService.generateInvoice(invoiceBSN);
+        invoiceService.generateSEPA(invoiceBSN, behandelCode);
+        
+        return "<a href='/invoice'>Klik hier om meer facturen te genereren</a>";
     }
 }

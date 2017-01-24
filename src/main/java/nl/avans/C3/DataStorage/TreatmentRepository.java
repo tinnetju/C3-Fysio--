@@ -32,7 +32,7 @@ public class TreatmentRepository implements TreatmentRepositoryIF {
     double tariefBehandeling = 0;
     
     public void readXML(int behandelCode) throws ParserConfigurationException, SAXException, IOException{
-        File xmlFile = new File("C:\\Users\\Stefan\\Desktop\\behandelcodes.xml");
+        File xmlFile = new File("behandelcodes.xml");
     
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -58,7 +58,7 @@ public class TreatmentRepository implements TreatmentRepositoryIF {
     
     @Override
     public Treatment getTreatment(int behandelCode) {
-        /*try {
+        try {
             readXML(behandelCode);
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(TreatmentRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,7 +66,7 @@ public class TreatmentRepository implements TreatmentRepositoryIF {
             Logger.getLogger(TreatmentRepository.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(TreatmentRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
         
         Treatment treatment = new Treatment(behandelCode, behandelingNaam, aantalSessies, sessieDuur, tariefBehandeling);
         
