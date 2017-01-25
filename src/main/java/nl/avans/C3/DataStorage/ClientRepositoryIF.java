@@ -24,7 +24,7 @@ public interface ClientRepositoryIF {
     
     public List<Client> findClientsByEmailAddress(String emailAddress);
     
-    public List<Client> findClientByBSN(String bSN);
+    public List<Client> findClientsByBSN(String bSN);
 
     public Client create(final Client client);
     

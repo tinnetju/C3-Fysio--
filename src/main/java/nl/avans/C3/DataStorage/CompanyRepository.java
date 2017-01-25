@@ -5,34 +5,35 @@
  */
 package nl.avans.C3.DataStorage;
 
+import java.util.List;
+import javax.sql.DataSource;
 import nl.avans.C3.Domain.Company;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Stefan
  */
 @Repository
-public class CompanyRepository {
-    private String name = "Zorgverzekering CZ";
-    private String address = "Straat 1";
-    private String postalCode = "1234AB";
-    private String city = "Breda";
-    private String country = "Nederland";
-    private String phoneNumber = "0761234567";
-        
-    private Company company = new Company(name, address, postalCode, city, country, phoneNumber);
+public class CompanyRepository implements CompanyRepositoryIF{
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
     
-    public Company getCompany() {
-        return company;
+    @Autowired
+    public CompanyRepository(DataSource dataSource){ 
+        this.jdbcTemplate = new JdbcTemplate(dataSource); 
     }
     
-    public void editCompany(String name, String address, String postalCode, String city, String country, String phoneNumber) {
-        company.setName(name);
-        company.setAddress(address);
-        company.setPostalCode(postalCode);
-        company.setCity(city);
-        company.setCountry(country);
-        company.setPhoneNumber(phoneNumber);
+    @Transactional(readOnly=true)
+    public List<Company> getCompany() {
+        List<Company> result = jdbcTemplate.query("SELECT * FROM insurancecompany", new CompanyRowMapper());
+        return result;
+    }
+    
+    public void editCompany(String name, String city, String postalCode, String address, String country, int kVK) {
+        jdbcTemplate.update("UPDATE insurancecompany SET Name = ?, City = ?, PostalCode = ?, Address = ?, Country = ?, KVK = ?", new Object[] {name, city, postalCode, address, country, kVK});
     }
 }

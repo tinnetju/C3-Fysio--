@@ -5,14 +5,15 @@
  */
 package nl.avans.C3.DataStorage;
 
+import java.util.List;
 import nl.avans.C3.Domain.Company;
 
 /**
  *
- * @author Tinne
+ * @author Stefan
  */
 public interface CompanyRepositoryIF {
-    public Company getCompany();
+    public List<Company> getCompany();
             
-    public void editCompany(String name, String address, String postalCode, String city, String country, String phoneNumber);
+    public void editCompany(String name, String city, String postalCode, String address, String country, int kVK);
 }

@@ -23,11 +23,11 @@ public class CompanyController {
     private CompanyService companyService;
     
     private String name;
-    private String address;
-    private String postalCode;
     private String city;
+    private String postalCode;
+    private String address;
     private String country;
-    private String phoneNumber;
+    private int kVK;
     
     @Autowired
     public CompanyController(CompanyService companyService) {
@@ -39,20 +39,20 @@ public class CompanyController {
         name = companyService.getCompany().getName();
         model.addAttribute("name", name);
         
-        address = companyService.getCompany().getAddress();
-        model.addAttribute("address", address);
+        city = companyService.getCompany().getCity();
+        model.addAttribute("city", city);
         
         postalCode = companyService.getCompany().getPostalCode();
         model.addAttribute("postalCode", postalCode);
         
-        city = companyService.getCompany().getCity();
-        model.addAttribute("city", city);
+        address = companyService.getCompany().getAddress();
+        model.addAttribute("address", address);
         
         country = companyService.getCompany().getCountry();
         model.addAttribute("country", country);
         
-        phoneNumber = companyService.getCompany().getPhoneNumber();
-        model.addAttribute("phoneNumber", phoneNumber);
+        kVK = companyService.getCompany().getKVK();
+        model.addAttribute("kVK", kVK);
         
         return "company";
     }
@@ -62,20 +62,20 @@ public class CompanyController {
         name = companyService.getCompany().getName();
         model.addAttribute("name", name);
         
-        address = companyService.getCompany().getAddress();
-        model.addAttribute("address", address);
+        city = companyService.getCompany().getCity();
+        model.addAttribute("city", city);
         
         postalCode = companyService.getCompany().getPostalCode();
         model.addAttribute("postalCode", postalCode);
         
-        city = companyService.getCompany().getCity();
-        model.addAttribute("city", city);
+        address = companyService.getCompany().getAddress();
+        model.addAttribute("address", address);
         
         country = companyService.getCompany().getCountry();
         model.addAttribute("country", country);
         
-        phoneNumber = companyService.getCompany().getPhoneNumber();
-        model.addAttribute("phoneNumber", phoneNumber);
+        kVK = companyService.getCompany().getKVK();
+        model.addAttribute("kVK", kVK);
         
         return "editcompany";
     }
@@ -84,13 +84,13 @@ public class CompanyController {
     @ResponseBody
     public String companySubmit(
             @RequestParam(value = "name") String nameEdit,
-            @RequestParam(value = "address") String addressEdit,
-            @RequestParam(value = "postalCode") String postalCodeEdit,
             @RequestParam(value = "city") String cityEdit,
+            @RequestParam(value = "postalCode") String postalCodeEdit,
+            @RequestParam(value = "address") String addressEdit,
             @RequestParam(value = "country") String countryEdit,
-            @RequestParam(value = "phoneNumber") String phoneNumberEdit
+            @RequestParam(value = "kVK") String kVKEdit
     ) {
-        companyService.editCompany(nameEdit, addressEdit, postalCodeEdit, cityEdit, countryEdit, phoneNumberEdit);
+        companyService.editCompany(nameEdit, cityEdit, postalCodeEdit, addressEdit, countryEdit, Integer.parseInt(kVKEdit));
         return "<a href='/company'>Keer terug</a>";
     }
 }

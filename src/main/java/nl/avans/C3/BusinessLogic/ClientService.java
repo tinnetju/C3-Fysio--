@@ -91,10 +91,10 @@ public class ClientService {
         }
     }
     
-    public List<Client> findClientByBSN(String bSN) throws ClientNotFoundException {
+    public List<Client> findClientsByBSN(String bSN) throws ClientNotFoundException {
         List<Client> clients = null;
 
-        clients = clientRepository.findClientByBSN(bSN);
+        clients = clientRepository.findClientsByBSN(bSN);
         if(clients.equals(null) || clients.size() < 1) {
             throw new ClientNotFoundException("Exception!");
         } else {

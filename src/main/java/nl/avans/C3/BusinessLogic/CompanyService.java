@@ -5,7 +5,7 @@
  */
 package nl.avans.C3.BusinessLogic;
 
-import nl.avans.C3.DataStorage.CompanyRepository;
+import java.util.List;
 import nl.avans.C3.DataStorage.CompanyRepositoryIF;
 import nl.avans.C3.Domain.Company;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +17,22 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CompanyService {
-    private Company company;
-    private CompanyRepository companyRepository;
+    private CompanyRepositoryIF companyRepositoryIF;
    
     @Autowired
-    public void setCompanyRepository(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
+    public void setCompanyRepository(CompanyRepositoryIF companyRepositoryIF) {
+        this.companyRepositoryIF = companyRepositoryIF;
     }
     
     public Company getCompany() {
-        company = companyRepository.getCompany();
+        List<Company> insuranceCompanyList = companyRepositoryIF.getCompany();
         
-        return company;
+        Company insuranceCompany = insuranceCompanyList.get(0);
+        
+        return insuranceCompany;
     }
     
-    public void editCompany(String name, String address, String postalCode, String city, String country, String phoneNumber) {
-        companyRepository.editCompany(name, address, postalCode, city, country, phoneNumber);
+    public void editCompany(String name, String city, String postalCode, String address, String country, int kVK) {
+        companyRepositoryIF.editCompany(name, city, postalCode, address, country, kVK);
     }
 }

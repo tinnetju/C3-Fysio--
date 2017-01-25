@@ -5,6 +5,8 @@
  */
 package nl.avans.C3.BusinessLogic;
 
+import com.itextpdf.text.DocumentException;
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +36,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class InvoiceController {
     private ClientService clientService;
     private InvoiceService invoiceService;
+    private SEPAService sEPAService;
     
     @Autowired
-    public InvoiceController(ClientService clientService, InvoiceService invoiceService) {
+    public InvoiceController(ClientService clientService, InvoiceService invoiceService, SEPAService sEPAService) {
         this.clientService = clientService;
         this.invoiceService = invoiceService;
+        this.sEPAService = sEPAService;
     }
     
     @RequestMapping("/invoice")
@@ -64,7 +68,7 @@ public class InvoiceController {
             try {
                 switch (searchquery.getSearchOption()) {
                     case "BSN":
-                        clients = clientService.findClientByBSN(searchquery.getSearchWords());
+                        clients = clientService.findClientsByBSN(searchquery.getSearchWords());
                         break;
                     case "Voornaam":
                         clients = clientService.findClientsByFirstName(searchquery.getSearchWords());
@@ -116,10 +120,10 @@ public class InvoiceController {
     
     @RequestMapping(value = "/clientinvoice", method = RequestMethod.POST)
     @ResponseBody
-    public String invoiceSubmit(@RequestParam(value = "bSN") String invoiceBSN) throws TransformerException, ParseException, ClientNotFoundException, ParserConfigurationException {
+    public String invoiceSubmit(@RequestParam(value = "bSN") String invoiceBSN) throws TransformerException, ParseException, ClientNotFoundException, ParserConfigurationException, DocumentException, FileNotFoundException {
         int[] behandelCode = {002,003,002,006,005};
-        //invoiceService.generateInvoice(invoiceBSN);
-        invoiceService.generateSEPA(invoiceBSN, behandelCode);
+        invoiceService.generateInvoice(invoiceBSN, behandelCode);
+        sEPAService.generateSEPA(invoiceBSN, behandelCode);
         
         return "<a href='/invoice'>Klik hier om meer facturen te genereren</a>";
     }

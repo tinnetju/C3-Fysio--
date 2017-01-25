@@ -71,8 +71,8 @@ public class ClientRepository implements ClientRepositoryIF {
     
     @Transactional(readOnly=true)
     @Override
-    public List<Client> findClientByBSN(String bSN) {
-        return jdbcTemplate.query("SELECT * FROM client WHERE BSN = ?", new Object[]{bSN}, new ClientRowMapper());
+    public List<Client> findClientsByBSN(String bSN) {
+        return jdbcTemplate.query("SELECT * FROM client WHERE BSN LIKE CONCAT('%',?,'%')", new Object[]{bSN}, new ClientRowMapper());
     }
     
     @Override
