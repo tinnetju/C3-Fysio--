@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head th:replace="fragments/head :: head"></head>
+    <body>
+        <div th:replace="fragments/header :: header"></div>
+        <div class="container">
+            <h1>Stamgegevens van de verzekeringsmaatschappij</h1>
+        </div>
+        
+        <div class="container">
+            <p th:text="'Bedrijfsnaam: ' + ${name}" />
+            <p th:text="'Plaats: ' + ${city}" />
+            <p th:text="'Postcode: ' + ${postalCode}" />
+            <p th:text="'Adres: ' + ${address}" />
+            <p th:text="'Land: ' + ${country}" />
+            <p th:text="'KVK: ' + ${kVK}" />
+            <br />
+            <p>
+                <a href="/editcompany"><button type="button" class="btn btn-primary">Bewerken</button></a>
+            </p>
+        </div>
+        
+        <div class="container">
+            <a href="/">Klik hier om terug te keren naar het hoofdmenu</a>
+        </div>
+        
+        <footer class="footer">
+            <div th:replace="fragments/footer :: footer">&copy; 2016 blog.codeleak.pl</div>
+        </footer>
+        
+        <script src="https://cdn.jsdelivr.net/webjars/jquery/2.2.1/jquery.min.js" th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
+        <script src="https://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+    </body>
+</html>

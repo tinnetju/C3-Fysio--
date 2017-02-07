@@ -23,9 +23,9 @@
                 <input type="text" id="SearchWords" th:field="*{searchWords}"/>
                 <br />
                 <br />
-                <button type="submit" class="btn btn-primary" name="search">Zoeken</button> 
-                <a href="/invoice"><button class="btn btn-danger">Reset</button></a>
+                <button type="submit" class="btn btn-primary" name="search">Zoeken</button>    
             </form>
+            <a href="/invoice"><button class="btn btn-danger">Reset</button></a>
         </div>
     
         <div class="container" th:if="${clients.empty}">

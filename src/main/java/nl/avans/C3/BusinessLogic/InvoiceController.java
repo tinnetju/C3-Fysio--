@@ -55,7 +55,7 @@ public class InvoiceController {
         model.addAttribute("clients", clients);
         model.addAttribute("searchquery", searchquery);
         
-        return "invoice";
+        return "views/invoice/invoice";
     }
     
     @RequestMapping(value = "/invoice", method = RequestMethod.POST)
@@ -84,7 +84,7 @@ public class InvoiceController {
         
         model.addAttribute("clients", clients);
         model.addAttribute("searchquery", searchquery);
-        return "invoice";
+        return "views/invoice/invoice";
     }
 
     private void InitializeSearchOptions(ModelMap model){
@@ -104,7 +104,7 @@ public class InvoiceController {
         String lastName = client.getLastName();
         
         //hard coded array om de behandelingen mee aan te geven
-        int[] behandelCode = {002,003,002,006,005};
+        int[] behandelCode = {002,003,006,005};
         
         List<Treatment> treatments = invoiceService.getTreatments(behandelCode);
         double totaalBedrag = invoiceService.getTotaalBedrag(behandelCode);
@@ -115,16 +115,16 @@ public class InvoiceController {
         model.addAttribute("totaalBedrag", totaalBedrag);
         model.addAttribute("bSN", bSN);
         
-        return "clientinvoice";
+        return "views/invoice/clientinvoice";
     }
     
     @RequestMapping(value = "/clientinvoice", method = RequestMethod.POST)
     @ResponseBody
     public String invoiceSubmit(@RequestParam(value = "bSN") String invoiceBSN) throws TransformerException, ParseException, ClientNotFoundException, ParserConfigurationException, DocumentException, FileNotFoundException {
-        int[] behandelCode = {002,003,002,006,005};
+        int[] behandelCode = {002,003,006,005};
         invoiceService.generateInvoice(invoiceBSN, behandelCode);
         sEPAService.generateSEPA(invoiceBSN, behandelCode);
         
-        return "<a href='/invoice'>Klik hier om meer facturen te genereren</a>";
+        return "Factuur en SEPA incasso bestand gegenereerd.<br /> <br /><a href='/invoice'>Klik hier om meer facturen te genereren</a>";
     }
 }
