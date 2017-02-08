@@ -57,7 +57,7 @@ public class SEPAService {
         String creationDateTime = LocalDateTime.now().toString();
         
         double totaalBedrag = invoiceService.getTotaalBedrag(behandelCode);
-        double excess = insuranceContractService.getInsuranceContract(Integer.parseInt(sepaBSN)).getExcess();
+        double excess = insuranceContractService.getInsuranceContractByBSN(Integer.parseInt(sepaBSN)).getExcess();
         double teBetalenBedrag;
         if (excess > 0){
             if(excess > totaalBedrag){

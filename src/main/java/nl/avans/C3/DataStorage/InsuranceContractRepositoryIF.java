@@ -13,7 +13,7 @@ import nl.avans.C3.Domain.InsuranceContract;
  * @author Stefan
  */
 public interface InsuranceContractRepositoryIF {
-    public List<InsuranceContract> getInsuranceContract(int bSN);
+    public List<InsuranceContract> getInsuranceContractByBSN(int bSN);
             
     public void updateInsuranceContractExcess(double excess, int contractID);
 }

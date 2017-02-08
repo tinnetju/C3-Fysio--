@@ -32,7 +32,7 @@ public class InsuranceContractRepository implements InsuranceContractRepositoryI
     }
     
     @Transactional(readOnly=true)
-    public List<InsuranceContract> getInsuranceContract(int bSN) {
+    public List<InsuranceContract> getInsuranceContractByBSN(int bSN) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date currentDate = new Date();
         

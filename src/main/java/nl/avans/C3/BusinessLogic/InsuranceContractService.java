@@ -24,8 +24,8 @@ public class InsuranceContractService {
         this.insuranceContractRepositoryIF = insuranceContractRepositoryIF;
     }
     
-    public InsuranceContract getInsuranceContract(int bSN) {
-        List<InsuranceContract> insuranceContractList = insuranceContractRepositoryIF.getInsuranceContract(bSN);
+    public InsuranceContract getInsuranceContractByBSN(int bSN) {
+        List<InsuranceContract> insuranceContractList = insuranceContractRepositoryIF.getInsuranceContractByBSN(bSN);
         
         InsuranceContract insuranceContract = insuranceContractList.get(0);
         

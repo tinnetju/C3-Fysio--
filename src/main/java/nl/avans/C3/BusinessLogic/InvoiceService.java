@@ -151,7 +151,7 @@ public class InvoiceService {
         insertCell(table, "", Element.ALIGN_RIGHT, 5, bf12);
         
         //huidig eigen risico
-        double excess = insuranceContractService.getInsuranceContract(Integer.parseInt(invoiceBSN)).getExcess();
+        double excess = insuranceContractService.getInsuranceContractByBSN(Integer.parseInt(invoiceBSN)).getExcess();
         insertCell(table, "Huidig eigen risico: ", Element.ALIGN_RIGHT, 4, bf12);
         insertCell(table, "€" + excess, Element.ALIGN_RIGHT, 1, bf12);
         
@@ -161,12 +161,12 @@ public class InvoiceService {
         insertCell(table, "Te betalen bedrag: ", Element.ALIGN_RIGHT, 4, bfBold12);
         if (excess > 0){
             if(excess > totaalBedrag){
-                insuranceContractService.updateInsuranceContractExcess(newExcess, insuranceContractService.getInsuranceContract(Integer.parseInt(invoiceBSN)).getContractID());
+                insuranceContractService.updateInsuranceContractExcess(newExcess, insuranceContractService.getInsuranceContractByBSN(Integer.parseInt(invoiceBSN)).getContractID());
                 insertCell(table, "€" + totaalBedrag, Element.ALIGN_RIGHT, 1, bfBold12);
                 teBetalenBedrag = totaalBedrag;
             }
             else{
-                insuranceContractService.updateInsuranceContractExcess(0.00, insuranceContractService.getInsuranceContract(Integer.parseInt(invoiceBSN)).getContractID());
+                insuranceContractService.updateInsuranceContractExcess(0.00, insuranceContractService.getInsuranceContractByBSN(Integer.parseInt(invoiceBSN)).getContractID());
                 insertCell(table, "€" + excess, Element.ALIGN_RIGHT, 1, bfBold12);
                 teBetalenBedrag = excess;
             }

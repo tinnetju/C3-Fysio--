@@ -37,12 +37,16 @@ public class InvoiceController {
     private ClientService clientService;
     private InvoiceService invoiceService;
     private SEPAService sEPAService;
+    private InsuranceContractService insuranceContractService;
+    
+    private int[] behandelCode = {002,003,006,005};
     
     @Autowired
-    public InvoiceController(ClientService clientService, InvoiceService invoiceService, SEPAService sEPAService) {
+    public InvoiceController(ClientService clientService, InvoiceService invoiceService, SEPAService sEPAService, InsuranceContractService insuranceContractService) {
         this.clientService = clientService;
         this.invoiceService = invoiceService;
         this.sEPAService = sEPAService;
+        this.insuranceContractService = insuranceContractService;
     }
     
     @RequestMapping("/invoice")
@@ -103,17 +107,29 @@ public class InvoiceController {
         String firstName = client.getFirstName();
         String lastName = client.getLastName();
         
-        //hard coded array om de behandelingen mee aan te geven
-        int[] behandelCode = {002,003,006,005};
-        
         List<Treatment> treatments = invoiceService.getTreatments(behandelCode);
         double totaalBedrag = invoiceService.getTotaalBedrag(behandelCode);
+        double excess = insuranceContractService.getInsuranceContractByBSN(bSN).getExcess();
+        double teBetalenBedrag;
+        if (excess > 0){
+            if(excess > totaalBedrag){
+                teBetalenBedrag = totaalBedrag;
+            }
+            else{
+                teBetalenBedrag = excess;
+            }
+        }
+        else{
+            teBetalenBedrag = 0.00;
+        }
         
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
         model.addAttribute("treatments", treatments); 
         model.addAttribute("totaalBedrag", totaalBedrag);
         model.addAttribute("bSN", bSN);
+        model.addAttribute("excess", excess);
+        model.addAttribute("teBetalenBedrag", teBetalenBedrag);
         
         return "views/invoice/clientinvoice";
     }
@@ -121,7 +137,6 @@ public class InvoiceController {
     @RequestMapping(value = "/clientinvoice", method = RequestMethod.POST)
     @ResponseBody
     public String invoiceSubmit(@RequestParam(value = "bSN") String invoiceBSN) throws TransformerException, ParseException, ClientNotFoundException, ParserConfigurationException, DocumentException, FileNotFoundException {
-        int[] behandelCode = {002,003,006,005};
         sEPAService.generateSEPA(invoiceBSN, behandelCode);
         invoiceService.generateInvoice(invoiceBSN, behandelCode);
         
