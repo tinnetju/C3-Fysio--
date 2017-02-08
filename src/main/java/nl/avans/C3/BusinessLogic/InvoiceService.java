@@ -38,12 +38,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class InvoiceService {
     private TreatmentRepositoryIF treatmentRepositoryIF;
+    private InsuranceContractService insuranceContractService;
     private ClientService clientService;
     private CompanyService companyService;
     
     @Autowired
-    public void setTreatmentRepository(TreatmentRepositoryIF treatmentRepositoryIF, ClientService clientService, CompanyService companyService) {
+    public void setTreatmentRepository(TreatmentRepositoryIF treatmentRepositoryIF, InsuranceContractService insuranceContractService, ClientService clientService, CompanyService companyService) {
         this.treatmentRepositoryIF = treatmentRepositoryIF;
+        this.insuranceContractService = insuranceContractService;
         this.clientService = clientService;
         this.companyService = companyService;
     }
@@ -140,19 +142,62 @@ public class InvoiceService {
             insertCell(table, "€" + treatmentRepositoryIF.getTreatment(behandelCode[i]).getTariefBehandeling(), Element.ALIGN_RIGHT, 1, bf12);
         }
         
+        //totaalbedrag zonder eigen risico
         double totaalBedrag = getTotaalBedrag(behandelCode);
         insertCell(table, "Totaalbedrag: ", Element.ALIGN_RIGHT, 4, bfBold12);
         insertCell(table, "€" + totaalBedrag, Element.ALIGN_RIGHT, 1, bfBold12);
         
+        //lege row
+        insertCell(table, "", Element.ALIGN_RIGHT, 5, bf12);
+        
+        //huidig eigen risico
+        double excess = insuranceContractService.getInsuranceContract(Integer.parseInt(invoiceBSN)).getExcess();
+        insertCell(table, "Huidig eigen risico: ", Element.ALIGN_RIGHT, 4, bf12);
+        insertCell(table, "€" + excess, Element.ALIGN_RIGHT, 1, bf12);
+        
+        //totaal te betalen bedrag
+        double teBetalenBedrag;
+        double newExcess = excess - totaalBedrag;
+        insertCell(table, "Te betalen bedrag: ", Element.ALIGN_RIGHT, 4, bfBold12);
+        if (excess > 0){
+            if(excess > totaalBedrag){
+                insuranceContractService.updateInsuranceContractExcess(newExcess, insuranceContractService.getInsuranceContract(Integer.parseInt(invoiceBSN)).getContractID());
+                insertCell(table, "€" + totaalBedrag, Element.ALIGN_RIGHT, 1, bfBold12);
+                teBetalenBedrag = totaalBedrag;
+            }
+            else{
+                insuranceContractService.updateInsuranceContractExcess(0.00, insuranceContractService.getInsuranceContract(Integer.parseInt(invoiceBSN)).getContractID());
+                insertCell(table, "€" + excess, Element.ALIGN_RIGHT, 1, bfBold12);
+                teBetalenBedrag = excess;
+            }
+        }
+        else{
+            insertCell(table, "€0.0", Element.ALIGN_RIGHT, 1, bfBold12);
+            teBetalenBedrag = 0.00;
+        }
+        
         Paragraph paragraph = new Paragraph("");
         paragraph.add(table);
         doc.add(paragraph);
-                
-        doc.add(new Paragraph("\n\n\n"));
         
-        doc.add(new Paragraph(
-            "We verzoeken u vriendelijk het bovenstaande bedrag van €" + totaalBedrag + " voor " + expirationDate + " te voldoen op onze bankrekening onder vermelding van het factuurnummer " + invoiceNumber + ". Voor vragen kunt u contact opnemen per e-mail."
-        ));
+        doc.add(new Paragraph("\n\n"));
+        
+        if (newExcess > 0){
+            doc.add(new Paragraph("U heeft nog €" + newExcess + " eigen risico over."));
+        }
+        else{
+            doc.add(new Paragraph("U heeft nog €0.0 eigen risico over."));
+        }
+        
+        
+        doc.add(new Paragraph("\n\n"));
+        
+        if (teBetalenBedrag > 0){
+            doc.add(new Paragraph("We verzoeken u vriendelijk het bovenstaande bedrag van €" + teBetalenBedrag + " voor " + expirationDate + " te voldoen op onze bankrekening onder vermelding van het factuurnummer " + invoiceNumber + ". Voor vragen kunt u contact opnemen per e-mail."));
+        }
+        else{
+            doc.add(new Paragraph("Omdat uw eigen risico op is worden er geen kosten in rekening gebracht voor de bovenstaande behandelingen."));
+        }
         
         // Closing the file
         doc.close();
@@ -171,5 +216,5 @@ public class InvoiceService {
         }
         //add the call to the table
         table.addCell(cell);
-   }
+    }
 }

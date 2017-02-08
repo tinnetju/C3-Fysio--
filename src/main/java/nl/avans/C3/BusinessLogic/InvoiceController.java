@@ -122,8 +122,8 @@ public class InvoiceController {
     @ResponseBody
     public String invoiceSubmit(@RequestParam(value = "bSN") String invoiceBSN) throws TransformerException, ParseException, ClientNotFoundException, ParserConfigurationException, DocumentException, FileNotFoundException {
         int[] behandelCode = {002,003,006,005};
-        invoiceService.generateInvoice(invoiceBSN, behandelCode);
         sEPAService.generateSEPA(invoiceBSN, behandelCode);
+        invoiceService.generateInvoice(invoiceBSN, behandelCode);
         
         return "Factuur en SEPA incasso bestand gegenereerd.<br /> <br /><a href='/invoice'>Klik hier om meer facturen te genereren</a>";
     }

@@ -37,12 +37,14 @@ public class SEPAService {
     private ClientService clientService;
     private CompanyService companyService;
     private InvoiceService invoiceService;
+    private InsuranceContractService insuranceContractService;
     
     @Autowired
-    public void setTreatmentRepository(ClientService clientService, CompanyService companyService, InvoiceService invoiceService) {
+    public void setTreatmentRepository(ClientService clientService, CompanyService companyService, InvoiceService invoiceService, InsuranceContractService insuranceContractService) {
         this.clientService = clientService;
         this.companyService = companyService;
         this.invoiceService = invoiceService;
+        this.insuranceContractService = insuranceContractService;
     }
     
     
@@ -54,7 +56,21 @@ public class SEPAService {
         
         String creationDateTime = LocalDateTime.now().toString();
         
-        String totalAmount = String.valueOf(invoiceService.getTotaalBedrag(behandelCode));
+        double totaalBedrag = invoiceService.getTotaalBedrag(behandelCode);
+        double excess = insuranceContractService.getInsuranceContract(Integer.parseInt(sepaBSN)).getExcess();
+        double teBetalenBedrag;
+        if (excess > 0){
+            if(excess > totaalBedrag){
+                teBetalenBedrag = totaalBedrag;
+            }
+            else{
+                teBetalenBedrag = excess;
+            }
+        }
+        else{
+            teBetalenBedrag = 0.00;
+        }
+        String totalAmount = String.valueOf(teBetalenBedrag);
         
         Date date = new Date();
         String dt = new SimpleDateFormat("yyyy-MM-dd").format(date);
@@ -352,8 +368,12 @@ public class SEPAService {
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         DOMSource source = new DOMSource(document);
         
-        StreamResult streamResult = new StreamResult(new File("generatedfiles/sepa/" + fileId + ".xml"));
-        
-        transformer.transform(source, streamResult);
+        if(teBetalenBedrag > 0){
+            StreamResult streamResult = new StreamResult(new File("generatedfiles/sepa/" + fileId + ".xml"));
+            transformer.transform(source, streamResult);
+        }
+        else{
+            //er hoeft geen SEPA incasso aangemaakt te worden
+        }
     }
 }
