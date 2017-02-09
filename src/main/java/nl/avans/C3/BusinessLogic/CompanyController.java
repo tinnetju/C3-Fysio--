@@ -95,6 +95,6 @@ public class CompanyController {
             @RequestParam(value = "kVK") String kVKEdit
     ) {
         companyService.editCompany(nameEdit, cityEdit, postalCodeEdit, addressEdit, countryEdit, Integer.parseInt(kVKEdit));
-        return "Stamgegevens aangepast!<br/><br/><a href='/'>Klik hier om terug te keren naar het hoodfdmenu</a>";
+        return "Stamgegevens aangepast!<br/><br/><a href='/company'>Klik hier om de stamgegevens te bekijken</a>";
     }
 }
